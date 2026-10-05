@@ -106,8 +106,18 @@ async function main() {
     data: {
       courseId: course.id,
       title: 'Chapter 4 — Modular Code',
-      description: 'Menulis kode yang rapi, terstruktur, dan dapat digunakan kembali menggunakan fungsi.',
+      description: 'Menulis kode yang rapi, terstruktur, dan dapat digunakan kembali menggunakan fungsi dan modul.',
       order: 4,
+    },
+  });
+
+  // Chapter 5: Object-Oriented Programming (OOP)
+  const chapter5 = await prisma.chapter.create({
+    data: {
+      courseId: course.id,
+      title: 'Chapter 5 — Object-Oriented',
+      description: 'Mengenal paradigma pemrograman berbasis objek (OOP) dengan Class dan Method.',
+      order: 5,
     },
   });
 
@@ -619,6 +629,234 @@ print(pesan)  # Halo, Andi!
         ],
       },
     },
+    {
+      chapterId: chapter3.id,
+      slug: '11-dictionary',
+      title: '11. Dictionary (Dict)',
+      order: 11,
+      description: 'Menyimpan data dengan pasangan Kunci dan Nilai (Key-Value pairs).',
+      learningObjectives: JSON.stringify([
+        'Memahami cara kerja Dictionary menggunakan kurung kurawal {}',
+        'Menyimpan dan mengakses data berbasis Key (kata kunci)',
+        'Menambah atau mengubah nilai di dalam Dictionary',
+      ]),
+      content: `## Apa itu Dictionary?
+
+Dictionary (Kamus) adalah struktur data yang menyimpan informasi berpasangan, yang kita sebut **Key-Value pairs** (Kunci dan Nilai). 
+
+Bayangkan seperti buku kontak di HP kamu: "Nama" adalah Kunci (Key), dan "Nomor HP" adalah Nilai (Value).
+
+\`\`\`python
+# Membuat kamus data siswa
+siswa = {
+    "nama": "Juliansa",
+    "umur": 22,
+    "jurusan": "Informatika"
+}
+
+# Mengakses data menggunakan kunci (key)
+print(siswa["nama"])  # Output: Juliansa
+\`\`\`
+
+### Menambah atau Mengubah Data
+Kamu bisa menambah kunci baru atau mengubah nilai dari kunci yang sudah ada dengan mudah:
+
+\`\`\`python
+# Menambah kunci baru
+siswa["hobi"] = "Coding"
+
+# Mengubah nilai yang ada
+siswa["umur"] = 23
+\`\`\``,
+      exampleCode: `profil = {\n    "nama": "Budi",\n    "skor": 95\n}\nprint(f"Skor {profil['nama']} adalah {profil['skor']}")`,
+      starterCode: `# Buat dictionary 'game' dengan key 'judul' bernilai "Minecraft" dan 'harga' bernilai 150000\n# Lalu cetak harga dari game tersebut\n`,
+      hints: JSON.stringify([
+        'game = {"judul": "Minecraft", "harga": 150000}',
+        'Cetak nilainya: print(game["harga"])',
+      ]),
+      exercise: {
+        title: 'Tantangan: Membuat Dictionary Game',
+        description: 'Buatlah dictionary bernama `game` yang memiliki 2 pasangan Key-Value: `"judul"` dengan nilai `"Minecraft"`, dan `"harga"` dengan nilai `150000`. Kemudian cetak nilai `"harga"` dari kamus tersebut.',
+        difficulty: 'EASY',
+        starterCode: `# Tulis kodemu di sini\n`,
+        solutionCode: `game = {\n    "judul": "Minecraft",\n    "harga": 150000\n}\nprint(game["harga"])`,
+        testCases: [
+          {
+            input: '',
+            expectedOutput: '150000',
+            order: 1,
+            isHidden: false,
+          },
+        ],
+      },
+    },
+    {
+      chapterId: chapter4.id,
+      slug: '12-modules',
+      title: '12. Built-in Modules',
+      order: 12,
+      description: 'Mengimpor dan menggunakan modul bawaan Python (math, random).',
+      learningObjectives: JSON.stringify([
+        'Mengerti konsep modul / pustaka (library) eksternal',
+        'Menggunakan kata kunci import untuk memanggil modul',
+        'Menggunakan fungsi matematika dan acak (random) dari modul bawaan',
+      ]),
+      content: `## Memanfaatkan Modul (Modules)
+
+Dalam Python, kita tidak perlu menulis semua kode dari nol. Python datang dengan ratusan "Modul Bawaan" (Built-in Modules) yang berisi kode siap pakai. 
+
+Salah satu modul yang sering digunakan adalah \`math\` dan \`random\`.
+
+Untuk menggunakan modul, kita memakai kata kunci \`import\`:
+
+\`\`\`python
+import math
+import random
+
+# Menghitung akar kuadrat (square root)
+akar = math.sqrt(25)
+print(akar)  # Output: 5.0
+
+# Menghasilkan angka acak dari 1 sampai 10
+angka_acak = random.randint(1, 10)
+print(angka_acak)
+\`\`\`
+
+Modul sangat menghemat waktu karena menyediakan solusi untuk perhitungan rumit.`,
+      exampleCode: `import math\n\n# Membulatkan nilai ke atas\nprint(math.ceil(4.2))  # Hasil: 5`,
+      starterCode: `import math\n# Hitung akar kuadrat dari 144 menggunakan math.sqrt() lalu cetak hasilnya\n`,
+      hints: JSON.stringify([
+        'Gunakan fungsi math.sqrt(144)',
+        'Bungkus fungsi tersebut di dalam print()',
+      ]),
+      exercise: {
+        title: 'Tantangan: Menghitung Akar Kuadrat',
+        description: 'Panggil fungsi `sqrt` dari modul `math` untuk menghitung akar kuadrat dari `144`. Cetak hasilnya ke layar. (Perhatikan: kamu harus melakukan import modul terlebih dahulu).',
+        difficulty: 'EASY',
+        starterCode: `import math\n# Tulis kodemu di bawah\n`,
+        solutionCode: `import math\nprint(math.sqrt(144))`,
+        testCases: [
+          {
+            input: '',
+            expectedOutput: '12.0',
+            order: 1,
+            isHidden: false,
+          },
+        ],
+      },
+    },
+    {
+      chapterId: chapter5.id,
+      slug: '13-intro-oop',
+      title: '13. Pengenalan OOP (Class & Object)',
+      order: 13,
+      description: 'Mengenal Class sebagai cetak biru (blueprint) dan Object sebagai perwujudannya.',
+      learningObjectives: JSON.stringify([
+        'Memahami paradigma Pemrograman Berorientasi Objek (OOP)',
+        'Membuat cetak biru menggunakan kata kunci class',
+        'Menciptakan objek (instance) dari sebuah class',
+      ]),
+      content: `## Pemrograman Berorientasi Objek (OOP)
+
+OOP adalah gaya pemrograman di mana kita memodelkan sesuatu di dunia nyata menjadi "Objek" yang memiliki sifat (atribut) dan perilaku (method).
+
+Ada 2 konsep utama:
+1. **Class**: Cetak biru (blueprint) / rancangan.
+2. **Object**: Barang nyata yang diciptakan dari cetak biru tersebut.
+
+\`\`\`python
+# 1. Membuat Class (Blueprint)
+class Kucing:
+    spesies = "Felis catus"
+
+# 2. Membuat Object (Barang Nyata)
+kucing_oren = Kucing()
+kucing_hitam = Kucing()
+
+print(kucing_oren.spesies)
+\`\`\`
+
+Di contoh atas, \`Kucing\` adalah cetakannya, dan \`kucing_oren\` adalah hasil cetaknya.`,
+      exampleCode: `class Robot:\n    bahan = "Metal"\n\nrobot1 = Robot()\nprint(robot1.bahan)`,
+      starterCode: `# Buat class bernama Mobil dengan atribut roda = 4\n# Buat object mobil_balap dari class Mobil, lalu cetak rodanya\n`,
+      hints: JSON.stringify([
+        'Ketik: class Mobil:\n    roda = 4',
+        'Buat object: mobil_balap = Mobil()',
+        'Cetak atributnya: print(mobil_balap.roda)',
+      ]),
+      exercise: {
+        title: 'Tantangan: Membuat Class Mobil',
+        description: 'Buatlah sebuah class bernama `Mobil` yang memiliki atribut `roda` bernilai `4`. Kemudian, buatlah sebuah objek (instance) bernama `mobil_balap` dari class tersebut, dan cetak nilai atribut `roda`-nya.',
+        difficulty: 'MEDIUM',
+        starterCode: `# Tulis deklarasi class di bawah ini\n`,
+        solutionCode: `class Mobil:\n    roda = 4\n\nmobil_balap = Mobil()\nprint(mobil_balap.roda)`,
+        testCases: [
+          {
+            input: '',
+            expectedOutput: '4',
+            order: 1,
+            isHidden: false,
+          },
+        ],
+      },
+    },
+    {
+      chapterId: chapter5.id,
+      slug: '14-oop-init',
+      title: '14. Constructor (__init__)',
+      order: 14,
+      description: 'Menambahkan data kustom ke setiap objek saat pertama kali dibuat.',
+      learningObjectives: JSON.stringify([
+        'Memahami fungsi khusus __init__ (Constructor)',
+        'Menggunakan kata ganti self untuk mengakses atribut milik objek itu sendiri',
+        'Mengirimkan argumen saat objek diciptakan',
+      ]),
+      content: `## Fungsi Constructor \`__init__\`
+
+Bagaimana jika kita ingin agar setiap objek yang dibuat memiliki nama atau warna yang berbeda-beda? Kita gunakan fungsi bawaan \`__init__\`. 
+
+Fungsi ini dipanggil secara otomatis saat objek dibuat.
+
+Kata ganti \`self\` digunakan untuk merujuk pada objek *itu sendiri*.
+
+\`\`\`python
+class Kucing:
+    # Constructor
+    def __init__(self, nama, warna):
+        self.nama = nama
+        self.warna = warna
+
+# Membuat objek Kucing dengan data berbeda
+kucing_1 = Kucing("Milo", "Oren")
+kucing_2 = Kucing("Luna", "Hitam")
+
+print(kucing_1.nama)  # Milo
+print(kucing_2.warna) # Hitam
+\`\`\``,
+      exampleCode: `class Player:\n    def __init__(self, username):\n        self.username = username\n        self.level = 1\n\np1 = Player("GamerPro")\nprint(f"Pemain {p1.username} Level {p1.level}")`,
+      starterCode: `# Buat class Buku dengan __init__(self, judul, penulis)\n# Set self.judul = judul dan self.penulis = penulis\n# Buat objek buku_1 = Buku("Harry Potter", "J.K. Rowling") lalu cetak judulnya\n`,
+      hints: JSON.stringify([
+        'def __init__(self, judul, penulis):',
+        'self.judul = judul\nself.penulis = penulis',
+        'buku_1 = Buku("Harry Potter", "J.K. Rowling")',
+        'print(buku_1.judul)',
+      ]),
+      exercise: {
+        title: 'Tantangan: Class Buku dengan Data Kustom',
+        description: 'Lengkapi class `Buku` yang memiliki fungsi `__init__` menerima parameter `self`, `judul`, dan `penulis`. Simpan `judul` dan `penulis` ke dalam atribut objek (menggunakan `self`). Buat objek `buku_1` dengan judul `"Harry Potter"` dan penulis `"J.K. Rowling"`. Cetak judul dari `buku_1`.',
+        difficulty: 'MEDIUM',
+        starterCode: `class Buku:\n    def __init__(self, judul, penulis):\n        # Lengkapi kode di sini\n        pass\n\n# Buat objek dan cetak di sini\n`,
+        solutionCode: `class Buku:\n    def __init__(self, judul, penulis):\n        self.judul = judul\n        self.penulis = penulis\n\nbuku_1 = Buku("Harry Potter", "J.K. Rowling")\nprint(buku_1.judul)`,
+        testCases: [
+          {
+            input: '',
+            expectedOutput: 'Harry Potter',
+            order: 1,
+            isHidden: false,
+          },
+        ],
+      },
+    }
   ];
 
   // Insert lessons and exercises
