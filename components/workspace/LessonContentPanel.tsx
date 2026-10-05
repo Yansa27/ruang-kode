@@ -139,52 +139,78 @@ export default function LessonContentPanel({
         </div>
       )}
 
-      {/* Short Summary (First paragraph of content) */}
-      <div className="prose prose-sm prose-slate dark:prose-invert max-w-none text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+      {/* Lesson Material Body */}
+      <div className="prose prose-sm prose-slate dark:prose-invert max-w-none space-y-3 text-xs leading-relaxed">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            pre: () => null,
+            pre: ({ node, ...props }) => (
+              <pre {...props} className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto" />
+            ),
             code: ({ node, ...props }) => (
               <code {...props} className="rounded text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1 py-0.5" />
             ),
           }}
         >
-          {content.split('\n\n')[0] + (content.split('\n\n').length > 1 ? '...' : '')}
+          {content}
         </ReactMarkdown>
       </div>
 
-      {/* Buka Pembahasan Teori Button */}
-      <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-3 shadow-xs">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
-          <BookOpen className="h-5 w-5" />
+      {/* Interactive Example Code Box */}
+      {exampleCode && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/30 overflow-hidden shadow-2xs">
+          <div className="flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+              <FileCode className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+              <span>Contoh Kode Pembelajaran</span>
+            </span>
+            <button
+              onClick={() => handleCopyExample(exampleCode)}
+              className="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+            >
+              <Copy className="h-3 w-3" />
+              <span>{copiedExample ? 'Tersalin ke Editor!' : 'Gunakan di Editor'}</span>
+            </button>
+          </div>
+          <pre className="p-3 text-[11px] font-mono text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/30 overflow-x-auto">
+            {exampleCode}
+          </pre>
         </div>
-        <div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">Pembahasan Teori</h3>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-            Baca rangkuman materi dan contoh kode sebelum mengerjakan latihan.
-          </p>
+      )}
+
+      {/* Mode Fokus Baca Button */}
+      <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+        <div className="flex items-center gap-3 text-left">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
+            <BookOpen className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">Kurang Fokus?</h3>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+              Buka materi dalam mode layar penuh (Pop-up).
+            </p>
+          </div>
         </div>
         <button
           onClick={() => setIsTheoryModalOpen(true)}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition shrink-0"
         >
-          <BookOpen className="h-4 w-4" />
-          <span>Buka Materi Pembelajaran</span>
+          <Sparkles className="h-4 w-4" />
+          <span>Mode Fokus</span>
         </button>
       </div>
 
-      {/* Slide-over Modal for Theory Content */}
+      {/* Centered Modal for Theory Content */}
       {isTheoryModalOpen && (
-        <div className="fixed inset-0 z-[100] flex justify-end">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity" 
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" 
             onClick={() => setIsTheoryModalOpen(false)} 
           />
 
-          {/* Slide-over panel */}
-          <div className="relative w-full max-w-md h-full bg-white dark:bg-slate-900 shadow-2xl animate-in slide-in-from-right duration-300 flex flex-col">
+          {/* Modal panel */}
+          <div className="relative w-full max-w-3xl max-h-[85vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800 shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
               <div className="flex items-center gap-2.5 text-slate-900 dark:text-white font-bold">
                 <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
