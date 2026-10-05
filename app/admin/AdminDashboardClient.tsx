@@ -52,6 +52,7 @@ interface AdminDashboardClientProps {
     totalUsers: number;
     totalLessons: number;
     totalSubmissions: number;
+    totalCertificates: number;
   };
 }
 
@@ -178,7 +179,7 @@ export default function AdminDashboardClient({
   return (
     <div className="space-y-8">
       {/* CMS Top Stats Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="flex items-center gap-2 text-slate-500">
             <Users className="h-4 w-4 text-blue-600" />
@@ -190,7 +191,7 @@ export default function AdminDashboardClient({
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="flex items-center gap-2 text-slate-500">
             <BookOpen className="h-4 w-4 text-emerald-600" />
-            <span className="text-xs font-medium">Total Lesson Pembelajaran</span>
+            <span className="text-xs font-medium">Total Lesson</span>
           </div>
           <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalLessons}</p>
         </div>
@@ -198,9 +199,17 @@ export default function AdminDashboardClient({
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="flex items-center gap-2 text-slate-500">
             <Code2 className="h-4 w-4 text-purple-600" />
-            <span className="text-xs font-medium">Total Submissions Masuk</span>
+            <span className="text-xs font-medium">Sukses Submissions</span>
           </div>
           <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalSubmissions}</p>
+        </div>
+
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Sparkles className="h-4 w-4 text-amber-500" />
+            <span className="text-xs font-medium">Sertifikat Terbit</span>
+          </div>
+          <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalCertificates}</p>
         </div>
       </div>
 

@@ -37,13 +37,15 @@ export default async function AdminPage() {
         orderBy: { order: 'asc' },
       },
     },
+    },
     orderBy: { order: 'asc' },
   });
 
-  const totalUsers = await prisma.user.count();
+  const totalUsers = await prisma.user.count({ where: { role: 'STUDENT' } });
   const totalLessons = await prisma.lesson.count();
-  const totalSubmissions = await prisma.submission.count();
-
+  const totalCertificates = await prisma.certificate.count();
+  const totalSubmissions = await prisma.submission.count({ where: { isSuccess: true } });
+  
   return (
     <AppShell
       user={{
@@ -74,6 +76,7 @@ export default async function AdminPage() {
             totalUsers,
             totalLessons,
             totalSubmissions,
+            totalCertificates,
           }}
         />
       </main>
