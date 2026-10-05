@@ -44,10 +44,6 @@ export const metadata: Metadata = {
     description: 'Platform pembelajaran pemrograman Python interaktif untuk mahasiswa Indonesia.',
     images: ['https://ruangkode.com/og-image.png'],
   },
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
   manifest: '/site.webmanifest',
 };
 
