@@ -41,7 +41,7 @@ export default function RootLayout({
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var th=localStorage.getItem('ruangkode_theme');var d=th==='dark'||(!th&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();`,
+            __html: `(function(){try{var th=localStorage.getItem('ruangkode_theme');var d=th==='dark'||(!th&&!window.matchMedia('(prefers-color-scheme: light)').matches);if(d){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();`,
           }}
         />
       </head>
