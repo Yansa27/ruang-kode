@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2 } from 'lucide-react';
+import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2, Gift } from 'lucide-react';
 
 import { toast } from 'sonner';
 
@@ -14,6 +14,12 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [institution, setInstitution] = useState('');
+  const [referralCode, setReferralCode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return new URLSearchParams(window.location.search).get('ref') || '';
+    }
+    return '';
+  });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +33,7 @@ export default function RegisterPage() {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phoneNumber, institution }),
+        body: JSON.stringify({ name, email, password, phoneNumber, institution, referralCode: referralCode.trim() || undefined }),
       });
 
       const data = await res.json();
@@ -214,6 +220,30 @@ export default function RegisterPage() {
                     className="block w-full rounded-xl border border-slate-300 py-3 pl-11 pr-4 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all shadow-sm"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  Kode Referral <span className="text-slate-400 font-normal text-xs">(opsional)</span>
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                    <Gift className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    type="text"
+                    value={referralCode}
+                    onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                    placeholder="Contoh: BUD-A3FZ2"
+                    className="block w-full rounded-xl border border-slate-300 py-3 pl-11 pr-4 text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-sm font-mono tracking-wider"
+                  />
+                </div>
+                {referralCode && (
+                  <p className="text-[11px] text-indigo-600 mt-1 flex items-center gap-1">
+                    <Gift className="h-3 w-3" />
+                    Kode referral terdeteksi — kamu akan dapat bonus +100 XP!
+                  </p>
+                )}
               </div>
 
               <div className="pt-4">

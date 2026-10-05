@@ -18,6 +18,7 @@ import {
   X,
   Sparkles,
   WifiOff,
+  Users,
 } from 'lucide-react';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import { useNetworkStatus } from '@/lib/offline';
@@ -92,6 +93,12 @@ export default function AppShell({
       label: 'Leaderboard',
       icon: Trophy,
       isActive: pathname === '/leaderboard',
+    },
+    {
+      href: '/referral',
+      label: 'Ajak Teman',
+      icon: Users,
+      isActive: pathname === '/referral',
     },
     {
       href: '/profile',
