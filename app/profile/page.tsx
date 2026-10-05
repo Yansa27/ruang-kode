@@ -210,7 +210,7 @@ export default async function ProfilePage() {
                   Selesaikan 100% materi dan latihan pada kursus untuk membuka dan mengklaim sertifikat kelulusan berlisensi resmi.
                 </p>
                 <Link
-                  href="/learn"
+                  href="/learn/python-fundamental"
                   className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   Lanjutkan Belajar →
