@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import WorkspaceNavbar from './WorkspaceNavbar';
 import LessonSidebar from './LessonSidebar';
 import LessonContentPanel from './LessonContentPanel';
-import MonacoEditorWrapper from './MonacoEditorWrapper';
 import OutputConsolePanel from './OutputConsolePanel';
 import ExerciseSuccessModal from './ExerciseSuccessModal';
 import ResetConfirmModal from './ResetConfirmModal';
 import { runPythonCode } from '@/lib/pyodide';
 import { soundFx } from '@/lib/sound';
 import { BookOpen, Code2, Terminal, CheckCircle2 } from 'lucide-react';
+
+const MonacoEditorWrapper = dynamic(() => import('./MonacoEditorWrapper'), { ssr: false, loading: () => <div className="h-full w-full flex items-center justify-center bg-slate-50 dark:bg-slate-900"><div className="animate-pulse flex flex-col items-center"><Code2 className="h-8 w-8 text-slate-300 mb-2" /><span className="text-xs text-slate-400">Memuat Editor...</span></div></div> });
 
 interface TestCaseItem {
   id: string;
