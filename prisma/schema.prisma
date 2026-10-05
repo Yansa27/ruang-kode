@@ -171,3 +171,8 @@ model Certificate {
   @@unique([userId, courseId])
 }
 
+
+model Setting {
+  key   String @id
+  value String
+}

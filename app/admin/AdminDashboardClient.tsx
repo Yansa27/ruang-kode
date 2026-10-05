@@ -15,6 +15,8 @@ import {
   Sparkles,
   Users,
   Code2,
+  Save,
+  Settings,
 } from 'lucide-react';
 import {
   LineChart,
@@ -72,11 +74,13 @@ interface AdminDashboardClientProps {
     submissionPieData: { name: string; value: number; color: string }[];
     enrollmentBarData: { name: string; students: number }[];
   };
+  initialCommunityLink?: string;
 }
 
 export default function AdminDashboardClient({
   courses,
   stats,
+  initialCommunityLink = '',
 }: AdminDashboardClientProps) {
   const router = useRouter();
   const [courseList, setCourseList] = useState(courses);
@@ -96,6 +100,11 @@ export default function AdminDashboardClient({
   const [exerciseTitle, setExerciseTitle] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+  // Settings state
+  const [communityLink, setCommunityLink] = useState(initialCommunityLink);
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+  const [settingsSuccess, setSettingsSuccess] = useState(false);
 
   const handleTogglePublish = async (lessonId: string, currentStatus: boolean) => {
     try {
@@ -191,6 +200,31 @@ export default function AdminDashboardClient({
       setError(err.message);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSettings(true);
+    setSettingsSuccess(false);
+
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'community_link', value: communityLink }),
+      });
+
+      if (!res.ok) throw new Error('Gagal menyimpan pengaturan');
+      
+      setSettingsSuccess(true);
+      setTimeout(() => setSettingsSuccess(false), 3000);
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+      alert('Terjadi kesalahan saat menyimpan pengaturan');
+    } finally {
+      setIsSavingSettings(false);
     }
   };
 
@@ -293,6 +327,54 @@ export default function AdminDashboardClient({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Settings Panel */}
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600">
+              <Settings className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Pengaturan Global</h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Atur tautan eksternal, komunitas, dan konfigurasi platform.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <form onSubmit={handleSaveSettings} className="mt-6 space-y-4 max-w-xl">
+          <div>
+            <label className="block text-sm font-semibold text-slate-700">Tautan Grup Komunitas (WhatsApp/Discord)</label>
+            <p className="text-[11px] text-slate-500 mt-0.5 mb-2">Tautan ini akan tampil di Dashboard Siswa untuk bergabung ke grup diskusi.</p>
+            <input
+              type="url"
+              value={communityLink}
+              onChange={(e) => setCommunityLink(e.target.value)}
+              placeholder="https://discord.gg/..."
+              className="block w-full rounded-lg border border-slate-300 py-2.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs"
+            />
+          </div>
+          
+          <div className="flex items-center gap-3 pt-2">
+            <button
+              type="submit"
+              disabled={isSavingSettings}
+              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-indigo-700 transition disabled:opacity-60"
+            >
+              <Save className="h-4 w-4" />
+              <span>{isSavingSettings ? 'Menyimpan...' : 'Simpan Pengaturan'}</span>
+            </button>
+            {settingsSuccess && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                <CheckCircle className="h-3.5 w-3.5" />
+                Berhasil disimpan!
+              </span>
+            )}
+          </div>
+        </form>
       </div>
 
       {/* Main CMS Management Content */}

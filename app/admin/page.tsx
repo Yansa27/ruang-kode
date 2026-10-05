@@ -112,6 +112,11 @@ export default async function AdminPage() {
       students: e._count.userId,
     };
   });
+  // Get current community link
+  const communityLinkSetting = await prisma.setting.findUnique({
+    where: { key: 'community_link' }
+  });
+  const communityLink = communityLinkSetting?.value || '';
   
   return (
     <AppShell
@@ -148,6 +153,7 @@ export default async function AdminPage() {
             submissionPieData,
             enrollmentBarData,
           }}
+          initialCommunityLink={communityLink}
         />
       </main>
     </AppShell>

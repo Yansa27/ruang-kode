@@ -35,10 +35,11 @@ import {
   ChevronDown,
   ChevronUp,
   BarChart3,
-  Lock,
   Star,
   Check,
   Trophy,
+  MessageCircle,
+  ExternalLink,
 } from 'lucide-react';
 
 interface LessonItem {
@@ -100,6 +101,7 @@ interface DashboardClientProps {
   nextLesson?: LessonItem | null;
   certificateNumber?: string | null;
   topStudents?: { id: string; name: string; xp: number; rank: number }[];
+  communityLink?: string | null;
 }
 
 // Authentic SVG Python Logo
@@ -126,6 +128,7 @@ export default function DashboardClient({
   nextLesson,
   certificateNumber,
   topStudents = [],
+  communityLink,
 }: DashboardClientProps) {
   const router = useRouter();
   const [isClaiming, setIsClaiming] = useState(false);
@@ -389,7 +392,36 @@ export default function DashboardClient({
                 </div>
               </div>
             </div>
+            
+            {/* Third Card: Community Banner (Full width on mobile, spans 12 cols if put outside, or maybe replace right card below?) 
+                Actually let's just add it as a new row or inside the right sidebar */}
           </div>
+          
+          {/* Komunitas Banner (Full width) */}
+          {communityLink && (
+            <div className="rounded-2xl border border-indigo-200/80 dark:border-indigo-900/60 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/20 p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm shrink-0">
+                  <MessageCircle className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">Gabung Komunitas RuangKode</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-xl leading-relaxed">
+                    Tanya jawab seputar materi, diskusi coding, dan bangun koneksi bersama ratusan pelajar lainnya di grup diskusi resmi kami.
+                  </p>
+                </div>
+              </div>
+              <a
+                href={communityLink}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition shrink-0"
+              >
+                <span>Join Grup Sekarang</span>
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          )}
 
           {/* ROW 2: 4 Metric Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

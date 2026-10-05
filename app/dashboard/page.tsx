@@ -108,6 +108,12 @@ export default async function DashboardPage() {
     rank: index + 1,
   }));
 
+  // Fetch Community Link Setting
+  const communityLinkSetting = await prisma.setting.findUnique({
+    where: { key: 'community_link' }
+  });
+  const communityLink = communityLinkSetting?.value || null;
+
   return (
     <DashboardClient
       user={{
@@ -129,6 +135,7 @@ export default async function DashboardPage() {
       nextLesson={nextLesson || null}
       certificateNumber={certificate?.certificateNumber || null}
       topStudents={topStudents}
+      communityLink={communityLink}
     />
   );
 }
