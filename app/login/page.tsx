@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Terminal, Lock, Mail, ArrowRight, AlertCircle, Check } from 'lucide-react';
 
+import { toast } from 'sonner';
+
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -19,6 +21,7 @@ function LoginContent() {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
+    const toastId = toast.loading('Memproses login...');
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -33,10 +36,11 @@ function LoginContent() {
         throw new Error(data.error || 'Login gagal.');
       }
 
+      toast.success('Login berhasil! Mengarahkan...', { id: toastId });
       window.location.href = callbackUrl;
     } catch (err: any) {
+      toast.error(err.message, { id: toastId });
       setError(err.message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -119,7 +123,7 @@ function LoginContent() {
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 px-4 text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 transition"
               >
                 <span>{isLoading ? 'Memproses...' : 'Masuk'}</span>
-                <ArrowRight className="h-4 w-4" />
+                {!isLoading && <ArrowRight className="h-4 w-4" />}
               </button>
             </div>
           </form>

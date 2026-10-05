@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle } from 'lucide-react';
 
+import { toast } from 'sonner';
+
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState('');
@@ -17,6 +19,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
+    const toastId = toast.loading('Mendaftarkan akun...');
 
     try {
       const res = await fetch('/api/auth/register', {
@@ -31,10 +34,11 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Registrasi gagal.');
       }
 
+      toast.success('Pendaftaran berhasil! Mengarahkan...', { id: toastId });
       window.location.href = '/dashboard';
     } catch (err: any) {
+      toast.error(err.message, { id: toastId });
       setError(err.message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -130,7 +134,7 @@ export default function RegisterPage() {
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 px-4 text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 transition"
               >
                 <span>{isLoading ? 'Mendaftarkan...' : 'Daftar Sekarang'}</span>
-                <ArrowRight className="h-4 w-4" />
+                {!isLoading && <ArrowRight className="h-4 w-4" />}
               </button>
             </div>
           </form>
