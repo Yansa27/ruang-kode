@@ -99,6 +99,7 @@ interface DashboardClientProps {
   recentActivities: ActivityItem[];
   nextLesson?: LessonItem | null;
   certificateNumber?: string | null;
+  topStudents?: { id: string; name: string; xp: number; rank: number }[];
 }
 
 // Authentic SVG Python Logo
@@ -124,6 +125,7 @@ export default function DashboardClient({
   recentActivities,
   nextLesson,
   certificateNumber,
+  topStudents = [],
 }: DashboardClientProps) {
   const router = useRouter();
   const [isClaiming, setIsClaiming] = useState(false);
@@ -752,44 +754,53 @@ export default function DashboardClient({
                 </div>
 
                 <div className="mt-3 space-y-2 text-xs">
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-amber-50/60 dark:bg-amber-950/40 border border-amber-200/70 dark:border-amber-900/60">
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-white shadow-2xs">
-                        1
-                      </span>
-                      <span className="font-semibold text-slate-900 dark:text-white truncate max-w-[120px]">Budi Santoso</span>
-                    </div>
-                    <span className="font-bold text-amber-800 dark:text-amber-400 text-[11px] flex items-center gap-1">
-                      <Zap className="h-3 w-3 fill-amber-500 text-amber-500" />
-                      240 XP
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-800">
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-300 dark:bg-slate-700 text-[10px] font-bold text-slate-700 dark:text-slate-300">
-                        2
-                      </span>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[120px]">Siti Rahma</span>
-                    </div>
-                    <span className="font-bold text-slate-700 dark:text-slate-300 text-[11px] flex items-center gap-1">
-                      <Zap className="h-3 w-3 fill-slate-400 text-slate-400" />
-                      190 XP
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-800">
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-200 dark:bg-amber-900/60 text-[10px] font-bold text-amber-800 dark:text-amber-300">
-                        3
-                      </span>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[120px]">Ahmad Fauzi</span>
-                    </div>
-                    <span className="font-bold text-slate-700 dark:text-slate-300 text-[11px] flex items-center gap-1">
-                      <Zap className="h-3 w-3 fill-slate-400 text-slate-400" />
-                      140 XP
-                    </span>
-                  </div>
+                  {topStudents.length > 0 ? (
+                    topStudents.map((student) => (
+                      <div
+                        key={student.id}
+                        className={`flex items-center justify-between p-2 rounded-xl border ${
+                          student.rank === 1
+                            ? 'bg-amber-50/60 dark:bg-amber-950/40 border-amber-200/70 dark:border-amber-900/60'
+                            : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200/70 dark:border-slate-800'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold shadow-2xs ${
+                              student.rank === 1
+                                ? 'bg-amber-500 text-white'
+                                : student.rank === 2
+                                ? 'bg-slate-300 dark:bg-slate-600 text-slate-800 dark:text-slate-200'
+                                : student.rank === 3
+                                ? 'bg-amber-200 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300'
+                                : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+                            }`}
+                          >
+                            {student.rank}
+                          </span>
+                          <span className="font-semibold text-slate-900 dark:text-white truncate max-w-[120px]">
+                            {student.name}
+                          </span>
+                        </div>
+                        <span
+                          className={`font-bold text-[11px] flex items-center gap-1 ${
+                            student.rank === 1
+                              ? 'text-amber-800 dark:text-amber-400'
+                              : 'text-slate-700 dark:text-slate-300'
+                          }`}
+                        >
+                          <Zap
+                            className={`h-3 w-3 ${
+                              student.rank === 1 ? 'fill-amber-500 text-amber-500' : 'fill-slate-400 text-slate-400'
+                            }`}
+                          />
+                          {student.xp} XP
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-4 text-center text-slate-400">Belum ada data peringkat.</div>
+                  )}
                 </div>
 
                 <Link

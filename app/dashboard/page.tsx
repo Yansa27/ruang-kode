@@ -94,6 +94,20 @@ export default async function DashboardPage() {
     },
   });
 
+  // Fetch top 3 students by XP
+  const topStudentsRaw = await prisma.userStats.findMany({
+    take: 3,
+    orderBy: { xp: 'desc' },
+    include: { user: { select: { name: true } } },
+  });
+  
+  const topStudents = topStudentsRaw.map((s, index) => ({
+    id: s.userId,
+    name: s.user.name,
+    xp: s.xp,
+    rank: index + 1,
+  }));
+
   return (
     <DashboardClient
       user={{
@@ -114,6 +128,7 @@ export default async function DashboardPage() {
       recentActivities={recentActivities}
       nextLesson={nextLesson || null}
       certificateNumber={certificate?.certificateNumber || null}
+      topStudents={topStudents}
     />
   );
 }
