@@ -10,10 +10,10 @@ export async function GET() {
     }
 
     const settings = await prisma.setting.findMany();
-    const settingsMap = settings.reduce((acc, curr) => {
+    const settingsMap = settings.reduce((acc: Record<string, string>, curr: { key: string; value: string }) => {
       acc[curr.key] = curr.value;
       return acc;
-    }, {} as Record<string, string>);
+    }, {});
 
     return NextResponse.json(settingsMap);
   } catch (error) {

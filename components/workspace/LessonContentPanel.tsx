@@ -18,6 +18,8 @@ import {
   EyeOff,
   AlertTriangle,
   Sparkles,
+  BookOpen,
+  X,
 } from 'lucide-react';
 
 interface ExerciseData {
@@ -62,6 +64,8 @@ export default function LessonContentPanel({
     setInternalHintsOpen(val);
     if (onToggleHints) onToggleHints(val);
   };
+
+  const [isTheoryModalOpen, setIsTheoryModalOpen] = useState(false);
 
   const [unlockedLevel, setUnlockedLevel] = useState<number>(1);
   const [showSolution, setShowSolution] = useState<boolean>(false);
@@ -135,42 +139,90 @@ export default function LessonContentPanel({
         </div>
       )}
 
-      {/* Lesson Material Body */}
-      <div className="prose prose-sm prose-slate dark:prose-invert max-w-none space-y-3 text-xs leading-relaxed">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            pre: ({ node, ...props }) => (
-              <pre {...props} className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto" />
-            ),
-            code: ({ node, ...props }) => (
-              <code {...props} className="rounded text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1 py-0.5" />
-            ),
-          }}
+      {/* Buka Pembahasan Teori Button */}
+      <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-3 shadow-xs">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
+          <BookOpen className="h-5 w-5" />
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">Pembahasan Teori</h3>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            Baca rangkuman materi dan contoh kode sebelum mengerjakan latihan.
+          </p>
+        </div>
+        <button
+          onClick={() => setIsTheoryModalOpen(true)}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition"
         >
-          {content}
-        </ReactMarkdown>
+          <BookOpen className="h-4 w-4" />
+          <span>Buka Materi Pembelajaran</span>
+        </button>
       </div>
 
-      {/* Interactive Example Code Box */}
-      {exampleCode && (
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/30 overflow-hidden shadow-2xs">
-          <div className="flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <FileCode className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-              <span>Contoh Kode Pembelajaran</span>
-            </span>
-            <button
-              onClick={() => handleCopyExample(exampleCode)}
-              className="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-            >
-              <Copy className="h-3 w-3" />
-              <span>{copiedExample ? 'Tersalin ke Editor!' : 'Gunakan di Editor'}</span>
-            </button>
+      {/* Slide-over Modal for Theory Content */}
+      {isTheoryModalOpen && (
+        <div className="fixed inset-0 z-[100] flex justify-end">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity" 
+            onClick={() => setIsTheoryModalOpen(false)} 
+          />
+
+          {/* Slide-over panel */}
+          <div className="relative w-full max-w-md h-full bg-white dark:bg-slate-900 shadow-2xl animate-in slide-in-from-right duration-300 flex flex-col">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800 shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
+              <div className="flex items-center gap-2.5 text-slate-900 dark:text-white font-bold">
+                <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <span>Teori: {title}</span>
+              </div>
+              <button
+                onClick={() => setIsTheoryModalOpen(false)}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-300 transition"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-5 space-y-6">
+              <div className="prose prose-sm prose-slate dark:prose-invert max-w-none text-xs leading-relaxed">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    pre: ({ node, ...props }) => (
+                      <pre {...props} className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto my-3 border border-slate-700 shadow-inner" />
+                    ),
+                    code: ({ node, ...props }) => (
+                      <code {...props} className="rounded text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1.5 py-0.5 border border-blue-100 dark:border-blue-900/30" />
+                    ),
+                  }}
+                >
+                  {content}
+                </ReactMarkdown>
+              </div>
+
+              {/* Interactive Example Code Box */}
+              {exampleCode && (
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/30 overflow-hidden shadow-2xs mt-4">
+                  <div className="flex items-center justify-between px-3 py-2.5 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+                    <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      <FileCode className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                      <span>Contoh Kode Acuan</span>
+                    </span>
+                    <button
+                      onClick={() => handleCopyExample(exampleCode)}
+                      className="flex items-center gap-1.5 rounded-md bg-white dark:bg-slate-800 px-2.5 py-1 text-[10px] font-semibold text-blue-600 dark:text-blue-400 shadow-2xs border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition"
+                    >
+                      <Copy className="h-3 w-3" />
+                      <span>{copiedExample ? 'Tersalin!' : 'Salin Code'}</span>
+                    </button>
+                  </div>
+                  <pre className="p-3 text-[11px] font-mono text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/30 overflow-x-auto">
+                    {exampleCode}
+                  </pre>
+                </div>
+              )}
+            </div>
           </div>
-          <pre className="p-3 text-[11px] font-mono text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/30 overflow-x-auto">
-            {exampleCode}
-          </pre>
         </div>
       )}
 
