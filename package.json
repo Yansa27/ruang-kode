@@ -13,6 +13,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@prisma/adapter-libsql": "^7.10.0",
     "@prisma/client": "^6.19.3",
+    "@tailwindcss/typography": "^0.5.20",
     "bcryptjs": "^3.0.3",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
@@ -23,6 +24,8 @@
     "puppeteer": "^25.12.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0"
   },

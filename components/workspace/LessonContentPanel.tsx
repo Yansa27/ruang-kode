@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   CheckCircle,
   HelpCircle,
@@ -104,28 +106,28 @@ export default function LessonContentPanel({
   };
 
   return (
-    <div suppressHydrationWarning className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 text-slate-800 bg-white border-r border-slate-200">
+    <div suppressHydrationWarning className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
       {/* Title & Description */}
       <div>
-        <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+        <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
           {title}
         </h1>
-        <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">
+        <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
           {description}
         </p>
       </div>
 
       {/* Learning Objectives */}
       {learningObjectives.length > 0 && (
-        <div className="rounded-xl border border-blue-100 bg-blue-50/50 p-3.5 text-xs">
-          <div className="flex items-center gap-1.5 font-semibold text-blue-900">
-            <Target className="h-3.5 w-3.5 text-blue-600" />
+        <div className="rounded-xl border border-blue-100 dark:border-blue-900/40 bg-blue-50/50 dark:bg-blue-950/20 p-3.5 text-xs">
+          <div className="flex items-center gap-1.5 font-semibold text-blue-900 dark:text-blue-300">
+            <Target className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
             <span>Tujuan Pembelajaran:</span>
           </div>
-          <ul className="mt-2 space-y-1.5 text-blue-950">
+          <ul className="mt-2 space-y-1.5 text-blue-950 dark:text-blue-200">
             {learningObjectives.map((obj, i) => (
               <li key={i} className="flex items-start gap-2">
-                <span className="text-blue-500 font-bold">•</span>
+                <span className="text-blue-500 dark:text-blue-400 font-bold">•</span>
                 <span>{obj}</span>
               </li>
             ))}
@@ -134,68 +136,39 @@ export default function LessonContentPanel({
       )}
 
       {/* Lesson Material Body */}
-      <div className="prose prose-sm prose-slate max-w-none space-y-3 text-xs leading-relaxed">
-        {content.split('\n\n').map((paragraph, idx) => {
-          if (paragraph.startsWith('## ')) {
-            return (
-              <h2 key={idx} className="text-sm font-bold text-slate-900 pt-2 border-b border-slate-100 pb-1">
-                {paragraph.replace('## ', '')}
-              </h2>
-            );
-          }
-          if (paragraph.startsWith('### ')) {
-            return (
-              <h3 key={idx} className="text-xs font-bold text-slate-800 pt-1">
-                {paragraph.replace('### ', '')}
-              </h3>
-            );
-          }
-          if (paragraph.startsWith('```')) {
-            const cleanCode = paragraph.replace(/```[a-z]*\n?/g, '').trim();
-            return (
-              <pre
-                key={idx}
-                className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto"
-              >
-                <code>{cleanCode}</code>
-              </pre>
-            );
-          }
-          if (paragraph.startsWith('* ') || paragraph.startsWith('- ')) {
-            const items = paragraph.split('\n');
-            return (
-              <ul key={idx} className="space-y-1 pl-4 list-disc text-slate-600">
-                {items.map((it, i) => (
-                  <li key={i}>{it.replace(/^[*|-]\s+/, '')}</li>
-                ))}
-              </ul>
-            );
-          }
-          return (
-            <p key={idx} className="text-slate-600">
-              {paragraph}
-            </p>
-          );
-        })}
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          className="prose prose-sm prose-slate dark:prose-invert max-w-none text-xs leading-relaxed"
+          components={{
+            pre: ({ node, ...props }) => (
+              <pre {...props} className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto" />
+            ),
+            code: ({ node, ...props }) => (
+              <code {...props} className="rounded text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1 py-0.5" />
+            ),
+          }}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
 
       {/* Interactive Example Code Box */}
       {exampleCode && (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 overflow-hidden shadow-2xs">
-          <div className="flex items-center justify-between px-3 py-2 bg-slate-100 border-b border-slate-200">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-              <FileCode className="h-3.5 w-3.5 text-blue-600" />
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/30 overflow-hidden shadow-2xs">
+          <div className="flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+              <FileCode className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
               <span>Contoh Kode Pembelajaran</span>
             </span>
             <button
               onClick={() => handleCopyExample(exampleCode)}
-              className="flex items-center gap-1 text-[11px] text-blue-600 hover:text-blue-700 font-medium"
+              className="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
             >
               <Copy className="h-3 w-3" />
               <span>{copiedExample ? 'Tersalin ke Editor!' : 'Gunakan di Editor'}</span>
             </button>
           </div>
-          <pre className="p-3 text-[11px] font-mono text-slate-800 bg-slate-50 overflow-x-auto">
+          <pre className="p-3 text-[11px] font-mono text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/30 overflow-x-auto">
             {exampleCode}
           </pre>
         </div>
@@ -203,38 +176,38 @@ export default function LessonContentPanel({
 
       {/* Exercise Challenge Box */}
       {exercise && (
-        <div className="rounded-2xl border-2 border-blue-500/20 bg-blue-50/20 p-4 sm:p-5 space-y-4">
+        <div className="rounded-2xl border-2 border-blue-500/20 bg-blue-50/20 dark:bg-blue-900/10 p-4 sm:p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 text-xs font-bold text-white shadow-2xs">
                 ★
               </span>
               <div>
-                <h3 className="text-xs font-bold text-slate-900">{exercise.title}</h3>
-                <span className="text-[10px] text-slate-400">Tantangan Praktek Langsung</span>
+                <h3 className="text-xs font-bold text-slate-900 dark:text-white">{exercise.title}</h3>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500">Tantangan Praktek Langsung</span>
               </div>
             </div>
-            <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-800">
+            <span className="rounded-md bg-blue-100 dark:bg-blue-900/40 px-2 py-0.5 text-[10px] font-semibold text-blue-800 dark:text-blue-300">
               {exercise.difficulty}
             </span>
           </div>
 
-          <p className="text-xs text-slate-700 leading-relaxed bg-white/80 border border-blue-100 rounded-xl p-3">
+          <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-white/80 dark:bg-slate-900/50 border border-blue-100 dark:border-blue-900/40 rounded-xl p-3">
             {exercise.description}
           </p>
 
           {/* Gradual Multi-Tier Hints Section */}
           {hints.length > 0 && (
-            <div ref={hintsRef} className="border-t border-blue-100/80 pt-3">
+            <div ref={hintsRef} className="border-t border-blue-100/80 dark:border-blue-900/40 pt-3">
               <div className="flex items-center justify-between">
                 <button
                   type="button"
                   onClick={() => setIsHintsOpen(!isHintsOpen)}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 hover:text-blue-800 transition"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition"
                 >
                   <Lightbulb className="h-4 w-4 text-amber-500 fill-amber-500/20" />
                   <span>Petunjuk Pengerjaan (Hint)</span>
-                  <span className="rounded-full bg-amber-100 border border-amber-200 px-1.5 py-0.2 text-[10px] font-bold text-amber-800 ml-1">
+                  <span className="rounded-full bg-amber-100 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-700/50 px-1.5 py-0.2 text-[10px] font-bold text-amber-800 dark:text-amber-300 ml-1">
                     {Math.min(unlockedLevel, hints.length)} / {hints.length}
                   </span>
                   {isHintsOpen ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
@@ -244,7 +217,7 @@ export default function LessonContentPanel({
                   <button
                     type="button"
                     onClick={unlockNextHint}
-                    className="flex items-center gap-1 text-[11px] font-medium text-amber-700 hover:text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md transition"
+                    className="flex items-center gap-1 text-[11px] font-medium text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 bg-amber-50 dark:bg-amber-900/30 border border-amber-200/80 dark:border-amber-700/50 px-2 py-0.5 rounded-md transition"
                   >
                     <Unlock className="h-3 w-3" />
                     <span>Buka Hint Berikutnya</span>
@@ -262,8 +235,8 @@ export default function LessonContentPanel({
                         key={idx}
                         className={`rounded-xl border p-3 text-xs transition ${
                           isUnlocked
-                            ? 'bg-amber-50/70 border-amber-200 text-amber-950'
-                            : 'bg-slate-50 border-slate-200 text-slate-400'
+                            ? 'bg-amber-50/70 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60 text-amber-950 dark:text-amber-200'
+                            : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1.5">
@@ -273,7 +246,7 @@ export default function LessonContentPanel({
                                 <span className="flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-white text-[9px] font-bold">
                                   {idx + 1}
                                 </span>
-                                <span className="text-amber-900">
+                                <span className="text-amber-900 dark:text-amber-300">
                                   {idx === 0 ? 'Tingkat 1: Konsep Dasar' : idx === 1 ? 'Tingkat 2: Struktur Kode' : `Tingkat ${idx + 1}: Bantuan Lanjutan`}
                                 </span>
                               </>

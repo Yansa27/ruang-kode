@@ -356,13 +356,13 @@ export default function LearningWorkspaceClient({
       />
 
       {/* Mobile Tab Switcher */}
-      <div className="flex border-b border-slate-200 bg-white md:hidden shrink-0">
+      <div className="flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 md:hidden shrink-0">
         <button
           onClick={() => setMobileTab('materi')}
           className={`flex-1 py-2 text-center text-xs font-semibold flex items-center justify-center gap-1.5 ${
             mobileTab === 'materi'
-              ? 'border-b-2 border-blue-600 text-blue-600'
-              : 'text-slate-500'
+              ? 'border-b-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+              : 'text-slate-500 dark:text-slate-400'
           }`}
         >
           <BookOpen className="h-3.5 w-3.5" />
@@ -372,8 +372,8 @@ export default function LearningWorkspaceClient({
           onClick={() => setMobileTab('code')}
           className={`flex-1 py-2 text-center text-xs font-semibold flex items-center justify-center gap-1.5 ${
             mobileTab === 'code'
-              ? 'border-b-2 border-blue-600 text-blue-600'
-              : 'text-slate-500'
+              ? 'border-b-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+              : 'text-slate-500 dark:text-slate-400'
           }`}
         >
           <Code2 className="h-3.5 w-3.5" />
@@ -383,8 +383,8 @@ export default function LearningWorkspaceClient({
           onClick={() => setMobileTab('output')}
           className={`flex-1 py-2 text-center text-xs font-semibold flex items-center justify-center gap-1.5 ${
             mobileTab === 'output'
-              ? 'border-b-2 border-blue-600 text-blue-600'
-              : 'text-slate-500'
+              ? 'border-b-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+              : 'text-slate-500 dark:text-slate-400'
           }`}
         >
           <Terminal className="h-3.5 w-3.5" />
