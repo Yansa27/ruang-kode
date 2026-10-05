@@ -88,7 +88,7 @@ export default async function CourseDetailPage({
       {/* Course Hero Banner */}
       <div className="relative rounded-2xl overflow-hidden bg-slate-900 shadow-xl border border-slate-800">
         {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay"></div>
         <div className="absolute -top-32 -right-32 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
         <div className="absolute top-20 -left-20 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
 

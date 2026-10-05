@@ -55,7 +55,7 @@ function LoginContent() {
       {/* Left Panel - Branding (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-slate-900 relative overflow-hidden px-12 py-16">
         {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-40 -left-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
