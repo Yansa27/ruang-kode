@@ -45,13 +45,73 @@ export default async function AdminPage() {
   const totalCertificates = await prisma.certificate.count();
   const totalSubmissions = await prisma.submission.count({ where: { status: 'PASSED' } });
   
-  // Dummy data for the past 7 days chart
-  const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-  const chartData = days.map((day) => ({
-    name: day,
-    users: Math.floor(Math.random() * 50) + 10,
-    submissions: Math.floor(Math.random() * 200) + 50,
-  }));
+  // Get real data for the past 7 days chart
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+
+  const recentUsers = await prisma.user.findMany({
+    where: { role: 'STUDENT', createdAt: { gte: sevenDaysAgo } },
+    select: { createdAt: true },
+  });
+
+  const recentSubmissions = await prisma.submission.findMany({
+    where: { createdAt: { gte: sevenDaysAgo } },
+    select: { createdAt: true },
+  });
+
+  // Aggregate by day
+  const daysMap = new Map<string, { users: number; submissions: number }>();
+  
+  for (let i = 0; i < 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dayStr = d.toLocaleDateString('id-ID', { weekday: 'short' });
+    daysMap.set(dayStr, { users: 0, submissions: 0 });
+  }
+
+  recentUsers.forEach((u) => {
+    const dayStr = u.createdAt.toLocaleDateString('id-ID', { weekday: 'short' });
+    if (daysMap.has(dayStr)) {
+      daysMap.get(dayStr)!.users += 1;
+    }
+  });
+
+  recentSubmissions.forEach((s) => {
+    const dayStr = s.createdAt.toLocaleDateString('id-ID', { weekday: 'short' });
+    if (daysMap.has(dayStr)) {
+      daysMap.get(dayStr)!.submissions += 1;
+    }
+  });
+
+  // Convert map to array and reverse so it goes from oldest to newest
+  const chartData = Array.from(daysMap.entries())
+    .map(([name, data]) => ({ name, ...data }))
+    .reverse();
+
+  // Pie chart data: Submission pass vs fail
+  const passedSubmissions = await prisma.submission.count({ where: { status: 'PASSED' } });
+  const failedSubmissions = await prisma.submission.count({ where: { status: 'FAILED' } });
+  
+  const submissionPieData = [
+    { name: 'Berhasil', value: passedSubmissions, color: '#10b981' }, // emerald
+    { name: 'Gagal / Error', value: failedSubmissions, color: '#ef4444' }, // red
+  ];
+
+  // Bar chart data: Most enrolled courses
+  const enrollmentsGrouped = await prisma.enrollment.groupBy({
+    by: ['courseId'],
+    _count: { userId: true },
+  });
+
+  // Map courseId to course title
+  const enrollmentBarData = enrollmentsGrouped.map((e) => {
+    const course = courses.find((c) => c.id === e.courseId);
+    return {
+      name: course ? course.title : 'Unknown',
+      students: e._count.userId,
+    };
+  });
   
   return (
     <AppShell
@@ -85,6 +145,8 @@ export default async function AdminPage() {
             totalSubmissions,
             totalCertificates,
             chartData,
+            submissionPieData,
+            enrollmentBarData,
           }}
         />
       </main>
