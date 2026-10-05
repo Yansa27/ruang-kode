@@ -399,7 +399,7 @@ export default function DashboardClient({
           
           {/* Komunitas Banner (Full width) */}
           {communityLink && (
-            <div className="rounded-2xl border border-indigo-200/80 dark:border-indigo-900/60 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/20 p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="rounded-2xl border border-indigo-200/80 dark:border-indigo-900/60 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/20 p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm shrink-0">
                   <MessageCircle className="h-6 w-6" />
@@ -411,15 +411,28 @@ export default function DashboardClient({
                   </p>
                 </div>
               </div>
-              <a
-                href={communityLink}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition shrink-0"
-              >
-                <span>Join Grup Sekarang</span>
-                <ExternalLink className="h-4 w-4" />
-              </a>
+              
+              <div className="flex items-center gap-4 shrink-0">
+                <div className="hidden md:flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="h-8 w-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 overflow-hidden relative">
+                        <Image src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="avatar" fill className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">+2.4k anggota aktif</span>
+                </div>
+                <a
+                  href={communityLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition"
+                >
+                  <span>Join Grup Sekarang</span>
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           )}
 
@@ -468,11 +481,14 @@ export default function DashboardClient({
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">Total XP Terkumpul</span>
               </div>
-              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-2.5">
+              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 flex items-end justify-between">
                 <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/60">
                   <Zap className="h-3 w-3 fill-emerald-600 text-emerald-600" />
                   <span>+30 XP per exercise selesai</span>
                 </span>
+                <svg className="w-16 h-6 text-blue-500 opacity-60" viewBox="0 0 100 30" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M0 25 Q 15 25, 25 15 T 50 15 T 75 5 T 100 0" />
+                </svg>
               </div>
             </div>
 
@@ -490,14 +506,14 @@ export default function DashboardClient({
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">dari {totalLessons} Materi</span>
               </div>
-              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-2.5">
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 flex items-center gap-3">
+                <div className="flex-1 h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                   <div
                     className="h-full rounded-full bg-blue-600"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
-                <div className="mt-1 flex justify-end text-[10px] font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
                   {progressPercent}%
                 </div>
               </div>
@@ -517,17 +533,18 @@ export default function DashboardClient({
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">Tantangan Diselesaikan</span>
               </div>
-              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-2.5 flex items-center justify-between">
+              <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 flex items-end justify-between">
                 <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/60">
                   <Check className="h-3 w-3" />
                   <span>100% Evaluasi Otomatis</span>
                 </span>
-                <Link
-                  href="/profile"
-                  className="text-[10px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  Lihat Selesai
-                </Link>
+                <div className="flex items-end gap-1 h-6">
+                  <div className="w-1.5 h-3 bg-emerald-200 rounded-t-sm"></div>
+                  <div className="w-1.5 h-4 bg-emerald-300 rounded-t-sm"></div>
+                  <div className="w-1.5 h-2 bg-emerald-200 rounded-t-sm"></div>
+                  <div className="w-1.5 h-5 bg-emerald-400 rounded-t-sm"></div>
+                  <div className="w-1.5 h-6 bg-emerald-500 rounded-t-sm"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -576,122 +593,68 @@ export default function DashboardClient({
                 </div>
               </div>
 
-              {/* Daftar Chapter Accordion */}
+              {/* Daftar Chapter Horizontal Scroll */}
               <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 shadow-xs space-y-3.5">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Daftar Chapter</h3>
+                <div className="flex items-center justify-between pb-3">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white">
+                    <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-sm font-bold">Daftar Chapter</span>
+                  </div>
                   <Link
                     href={`/learn/${course.slug}`}
-                    className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1"
+                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1"
                   >
                     <span>Lihat Silabus Lengkap</span>
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
 
-                <div className="space-y-2.5">
-                  {course.chapters.map((chapter) => {
-                    const isExpanded = expandedChapter === chapter.id;
+                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x">
+                  {course.chapters.map((chapter, i) => {
+                    const isFirst = i === 0;
                     const chLessons = chapter.lessons;
                     const chDone = chLessons.filter((l) => completedSet.has(l.id)).length;
                     const isAllDone = chDone === chLessons.length && chLessons.length > 0;
+                    const isLocked = !isFirst && !isAllDone && chDone === 0 && !completedSet.has(course.chapters[i-1]?.lessons[course.chapters[i-1]?.lessons.length - 1]?.id || '');
+                    const isCurrent = !isLocked && !isAllDone;
 
                     return (
-                      <div
+                      <Link
                         key={chapter.id}
-                        className="rounded-xl border border-slate-200/90 dark:border-slate-800 overflow-hidden transition"
+                        href={isLocked ? '#' : `/learn/${course.slug}`}
+                        className={`min-w-[200px] sm:min-w-[220px] rounded-xl border p-4 shrink-0 snap-start flex flex-col gap-2 transition-all ${
+                          isCurrent 
+                            ? 'bg-blue-600 border-blue-600 text-white shadow-md' 
+                            : isAllDone
+                              ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                              : 'bg-slate-50 dark:bg-slate-800/50 border-slate-100 dark:border-slate-800/80 opacity-70 cursor-not-allowed'
+                        }`}
                       >
-                        <button
-                          onClick={() => setExpandedChapter(isExpanded ? null : chapter.id)}
-                          className="w-full flex items-center justify-between p-3.5 bg-slate-50/70 dark:bg-slate-800/40 hover:bg-slate-100/70 dark:hover:bg-slate-800 transition text-left"
-                        >
-                          <div className="flex items-center gap-3">
-                            {isAllDone ? (
-                              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
-                                <CheckCircle2 className="h-3.5 w-3.5" />
-                              </div>
-                            ) : (
-                              <div className="flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-[11px] font-bold">
-                                {chapter.order}
-                              </div>
-                            )}
-                            <div>
-                              <p className="text-xs sm:text-[13px] font-bold text-slate-900 dark:text-white">
-                                {chapter.title}
-                              </p>
-                              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                                {chDone} dari {chLessons.length} lesson selesai
-                              </p>
+                        <div className="flex items-center justify-between mb-1">
+                          {isCurrent ? (
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-white">
+                              <Play className="h-3.5 w-3.5 fill-white" />
                             </div>
-                          </div>
-
-                          <div className="flex items-center gap-2.5">
-                            <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 hidden sm:inline">
-                              {isExpanded ? 'Tutup Detail' : 'Lihat Detail'}
-                            </span>
-                            {isExpanded ? (
-                              <ChevronUp className="h-3.5 w-3.5 text-slate-400" />
-                            ) : (
-                              <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-                            )}
-                          </div>
-                        </button>
-
-                        {isExpanded && (
-                          <div className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
-                            {chLessons.map((lesson) => {
-                              const isLessonDone = completedSet.has(lesson.id);
-                              const isNext = nextLesson?.id === lesson.id;
-
-                              return (
-                                <div
-                                  key={lesson.id}
-                                  className={`flex items-center justify-between p-3 px-4 text-xs transition ${
-                                    isNext ? 'bg-blue-50/40 dark:bg-blue-950/30' : 'hover:bg-slate-50/70 dark:hover:bg-slate-800/40'
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-2.5">
-                                    {isLessonDone ? (
-                                      <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                                    ) : isNext ? (
-                                      <div className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-white shrink-0">
-                                        <Play className="h-2 w-2 fill-white" />
-                                      </div>
-                                    ) : (
-                                      <Circle className="h-3.5 w-3.5 text-slate-300 dark:text-slate-600 shrink-0" />
-                                    )}
-                                    <div>
-                                      <span
-                                        className={`font-semibold ${
-                                          isNext ? 'text-blue-700 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'
-                                        }`}
-                                      >
-                                        {lesson.title}
-                                      </span>
-                                      <p className="text-[11px] text-slate-400 dark:text-slate-500 line-clamp-1">
-                                        {lesson.description}
-                                      </p>
-                                    </div>
-                                  </div>
-
-                                  <Link
-                                    href={`/learn/${course.slug}/${lesson.slug}`}
-                                    className={`rounded-md px-2.5 py-1 text-xs font-semibold transition shrink-0 ${
-                                      isNext
-                                        ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-2xs'
-                                        : isLessonDone
-                                        ? 'border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-                                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
-                                    }`}
-                                  >
-                                    {isNext ? 'Mulai' : isLessonDone ? 'Ulangi' : 'Buka'}
-                                  </Link>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
+                          ) : isAllDone ? (
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400">
+                              <CheckCircle2 className="h-4 w-4" />
+                            </div>
+                          ) : (
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400">
+                              <span className="text-[10px]"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                            </div>
+                          )}
+                          {!isCurrent && <ChevronRight className={`h-4 w-4 ${isLocked ? 'text-slate-300' : 'text-slate-400'}`} />}
+                        </div>
+                        <div>
+                          <p className={`text-[10px] font-semibold mb-0.5 ${isCurrent ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}`}>
+                            Chapter {chapter.order}
+                          </p>
+                          <h4 className={`text-sm font-bold truncate ${isCurrent ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
+                            {chapter.title}
+                          </h4>
+                        </div>
+                      </Link>
                     );
                   })}
                 </div>
