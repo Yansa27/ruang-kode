@@ -48,6 +48,7 @@ export default function AppShell({
   const [mounted, setMounted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -360,13 +361,72 @@ export default function AppShell({
             {/* Global Theme Toggle */}
             <ThemeToggle size="md" />
 
-            <button
-              title="Notifikasi"
-              className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
-            >
-              <Bell className="h-4 w-4" />
-              <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setNotifOpen(!notifOpen)}
+                title="Notifikasi"
+                className={`relative flex h-8 w-8 items-center justify-center rounded-lg border text-slate-500 dark:text-slate-400 transition ${
+                  notifOpen 
+                    ? 'border-blue-500 bg-blue-50 text-blue-600 dark:border-blue-500 dark:bg-slate-800' 
+                    : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <Bell className="h-4 w-4" />
+                <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900" />
+              </button>
+
+              {/* Notifications Dropdown */}
+              {notifOpen && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setNotifOpen(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden origin-top-right animate-in fade-in zoom-in-95 duration-200">
+                    <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <h3 className="font-semibold text-slate-900 dark:text-white">Notifikasi</h3>
+                      <button 
+                        onClick={() => setNotifOpen(false)}
+                        className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+                      >
+                        Tandai semua dibaca
+                      </button>
+                    </div>
+                    <div className="divide-y divide-slate-100 dark:divide-slate-800 max-h-80 overflow-y-auto">
+                      <div className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer flex gap-3">
+                        <div className="mt-0.5 shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                          <Sparkles className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Selamat datang di RuangKode!</p>
+                          <p className="text-xs text-slate-500 mt-0.5">Selesaikan lesson pertamamu untuk mendapatkan XP dan naik peringkat.</p>
+                          <p className="text-[10px] text-slate-400 mt-1.5">Baru saja</p>
+                        </div>
+                      </div>
+                      <div className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer flex gap-3">
+                        <div className="mt-0.5 shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">
+                          <Trophy className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Fitur Ajak Teman Aktif</p>
+                          <p className="text-xs text-slate-500 mt-0.5">Ajak temanmu bergabung dan dapatkan tambahan XP bersama-sama.</p>
+                          <p className="text-[10px] text-slate-400 mt-1.5">1 hari yang lalu</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 text-center">
+                      <Link 
+                        href="/profile" 
+                        onClick={() => setNotifOpen(false)}
+                        className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+                      >
+                        Lihat semua aktivitas
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
 
             {/* User Profile Capsule */}
             <Link
