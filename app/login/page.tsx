@@ -33,8 +33,7 @@ function LoginContent() {
         throw new Error(data.error || 'Login gagal.');
       }
 
-      router.push(callbackUrl);
-      router.refresh();
+      window.location.href = callbackUrl;
     } catch (err: any) {
       setError(err.message);
     } finally {
