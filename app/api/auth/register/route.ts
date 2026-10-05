@@ -77,12 +77,20 @@ export async function POST(request: Request) {
       role: user.role as 'STUDENT' | 'ADMIN',
     });
 
-    await setAuthCookie(token);
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user,
     });
+
+    response.cookies.set('ruangkode_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return response;
   } catch (error) {
     console.error('Register error:', error);
     return NextResponse.json(
