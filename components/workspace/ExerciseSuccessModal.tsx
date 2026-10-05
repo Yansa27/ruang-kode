@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import confetti from 'canvas-confetti';
 import { CheckCircle2, Zap, ArrowRight, RotateCcw, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
@@ -24,31 +23,31 @@ export default function ExerciseSuccessModal({
     if (isOpen) {
       // Fire celebratory multi-cannon confetti burst
       try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#2563eb', '#38bdf8', '#16a34a', '#f59e0b', '#8b5cf6'],
+        import('canvas-confetti').then((confetti) => {
+          confetti.default({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#2563eb', '#38bdf8', '#16a34a', '#f59e0b', '#8b5cf6'],
+          });
+
+          setTimeout(() => {
+            confetti.default({
+              particleCount: 40,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0.05, y: 0.7 },
+              colors: ['#2563eb', '#f59e0b'],
+            });
+            confetti.default({
+              particleCount: 40,
+              angle: 120,
+              spread: 55,
+              origin: { x: 0.95, y: 0.7 },
+              colors: ['#10b981', '#6366f1'],
+            });
+          }, 200);
         });
-
-        const timer = setTimeout(() => {
-          confetti({
-            particleCount: 40,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0.05, y: 0.7 },
-            colors: ['#2563eb', '#f59e0b'],
-          });
-          confetti({
-            particleCount: 40,
-            angle: 120,
-            spread: 55,
-            origin: { x: 0.95, y: 0.7 },
-            colors: ['#10b981', '#6366f1'],
-          });
-        }, 200);
-
-        return () => clearTimeout(timer);
       } catch (e) {
         // Fallback if canvas is unavailable
       }
