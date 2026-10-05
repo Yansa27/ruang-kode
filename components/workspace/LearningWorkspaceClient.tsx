@@ -413,8 +413,8 @@ export default function LearningWorkspaceClient({
         >
           {/* Panel 1: Lesson Material (Resizable on desktop) */}
           <div
-            style={{ width: `${leftWidth}%` }}
-            className={`w-full shrink-0 h-full ${
+            style={{ '--desktop-width': `${leftWidth}%` } as React.CSSProperties}
+            className={`w-full md:w-[var(--desktop-width)] shrink-0 h-full ${
               mobileTab === 'materi' ? 'block' : 'hidden md:block'
             }`}
           >
@@ -474,8 +474,8 @@ export default function LearningWorkspaceClient({
 
           {/* Panel 3: Output & Test Case Console (Resizable on desktop) */}
           <div
-            style={{ width: `${rightWidth}%` }}
-            className={`w-full shrink-0 h-full ${
+            style={{ '--desktop-width': `${rightWidth}%` } as React.CSSProperties}
+            className={`w-full md:w-[var(--desktop-width)] shrink-0 h-full ${
               mobileTab === 'output' ? 'block' : 'hidden md:block'
             }`}
           >
