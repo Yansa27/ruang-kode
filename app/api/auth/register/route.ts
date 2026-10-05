@@ -4,11 +4,11 @@ import { hashPassword, createSessionToken, setAuthCookie } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, phoneNumber, institution } = await request.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
-        { error: 'Semua kolom wajib diisi.' },
+        { error: 'Nama, Email, dan Password wajib diisi.' },
         { status: 400 }
       );
     }
@@ -38,6 +38,8 @@ export async function POST(request: Request) {
         name: name.trim(),
         email: email.toLowerCase().trim(),
         password: hashedPassword,
+        phoneNumber: phoneNumber?.trim() || null,
+        institution: institution?.trim() || null,
         role: 'STUDENT',
         stats: {
           create: {
