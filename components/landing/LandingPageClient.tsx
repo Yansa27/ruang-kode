@@ -109,12 +109,12 @@ export default function LandingPageClient() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-5 min-h-[260px] bg-white">
+    <div className="grid grid-cols-1 sm:grid-cols-5 min-h-[280px] bg-white dark:bg-[#0B0F19]">
       {/* Left: Code Editor (3/5 width) */}
-      <div className="sm:col-span-3 p-6 font-mono text-[13px] border-r border-slate-100">
+      <div className="sm:col-span-3 p-6 font-mono text-[13px] border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0B0F19]">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Editor Kode</span>
-          <div className="h-px flex-1 bg-slate-100" />
+          <div className="h-px flex-1 bg-slate-100 dark:bg-slate-800" />
         </div>
         <div className="space-y-1.5 leading-relaxed">
           {CODE_LINES.map((line, i) => (
@@ -124,7 +124,7 @@ export default function LandingPageClient() {
                 i < codeVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              <span className="w-5 text-right font-semibold text-slate-300 shrink-0 select-none">{i + 1}</span>
+              <span className="w-5 text-right font-semibold text-slate-300 dark:text-slate-700 shrink-0 select-none">{i + 1}</span>
               <span className={getLineColor(line.type)}>
                 {i < codeVisible ? highlight(line.text) : <span>&nbsp;</span>}
                 {i === codeVisible - 1 && !done && (
@@ -137,17 +137,17 @@ export default function LandingPageClient() {
       </div>
 
       {/* Right: Terminal Output (2/5 width) */}
-      <div className="sm:col-span-2 p-6 font-mono text-[13px] bg-slate-50/80 flex flex-col">
+      <div className="sm:col-span-2 p-6 font-mono text-[13px] bg-slate-900 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-sans">Output Terminal</span>
           <button
             onClick={runDemo}
-            className="flex items-center gap-1.5 rounded-lg bg-blue-100 hover:bg-blue-200 px-2.5 py-1 text-[10px] font-bold text-blue-700 transition-colors font-sans"
+            className="flex items-center gap-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 px-2.5 py-1 text-[10px] font-bold text-blue-400 transition-colors font-sans"
           >
             {running ? (
               <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
-              <Play className="h-3 w-3 fill-blue-700" />
+              <Play className="h-3 w-3 fill-blue-400" />
             )}
             {running ? 'Running' : 'Run Ulang'}
           </button>
@@ -155,7 +155,7 @@ export default function LandingPageClient() {
 
         <div className="space-y-2 flex-1">
           {running && outputVisible === 0 && (
-            <div className="flex items-center gap-2 text-slate-500 animate-pulse font-sans text-xs font-medium">
+            <div className="flex items-center gap-2 text-slate-400 animate-pulse font-sans text-xs font-medium">
               <Loader2 className="h-3 w-3 animate-spin" />
               <span>Memproses kode...</span>
             </div>
