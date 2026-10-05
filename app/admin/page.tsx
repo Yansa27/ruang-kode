@@ -37,14 +37,21 @@ export default async function AdminPage() {
         orderBy: { order: 'asc' },
       },
     },
-    },
     orderBy: { order: 'asc' },
   });
 
   const totalUsers = await prisma.user.count({ where: { role: 'STUDENT' } });
   const totalLessons = await prisma.lesson.count();
   const totalCertificates = await prisma.certificate.count();
-  const totalSubmissions = await prisma.submission.count({ where: { isSuccess: true } });
+  const totalSubmissions = await prisma.submission.count({ where: { status: 'PASSED' } });
+  
+  // Dummy data for the past 7 days chart
+  const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+  const chartData = days.map((day) => ({
+    name: day,
+    users: Math.floor(Math.random() * 50) + 10,
+    submissions: Math.floor(Math.random() * 200) + 50,
+  }));
   
   return (
     <AppShell
@@ -77,6 +84,7 @@ export default async function AdminPage() {
             totalLessons,
             totalSubmissions,
             totalCertificates,
+            chartData,
           }}
         />
       </main>

@@ -16,6 +16,15 @@ import {
   Users,
   Code2,
 } from 'lucide-react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
 interface LessonItem {
   id: string;
@@ -53,6 +62,7 @@ interface AdminDashboardClientProps {
     totalLessons: number;
     totalSubmissions: number;
     totalCertificates: number;
+    chartData: { name: string; users: number; submissions: number }[];
   };
 }
 
@@ -210,6 +220,25 @@ export default function AdminDashboardClient({
             <span className="text-xs font-medium">Sertifikat Terbit</span>
           </div>
           <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalCertificates}</p>
+        </div>
+      </div>
+
+      {/* Analytics Chart */}
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+        <h2 className="text-lg font-bold text-slate-900 mb-6">Aktivitas Platform (7 Hari Terakhir)</h2>
+        <div className="h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={stats.chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
+              <Tooltip
+                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px' }}
+              />
+              <Line type="monotone" dataKey="submissions" name="Submissions" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+              <Line type="monotone" dataKey="users" name="Pendaftar Baru" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
