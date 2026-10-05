@@ -136,9 +136,9 @@ export default function LessonContentPanel({
       )}
 
       {/* Lesson Material Body */}
+      <div className="prose prose-sm prose-slate dark:prose-invert max-w-none space-y-3 text-xs leading-relaxed">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          className="prose prose-sm prose-slate dark:prose-invert max-w-none text-xs leading-relaxed"
           components={{
             pre: ({ node, ...props }) => (
               <pre {...props} className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto" />
