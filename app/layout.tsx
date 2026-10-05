@@ -13,12 +13,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'RuangKode — Belajar Coding. Langsung Praktik.',
+  title: {
+    template: '%s | RuangKode',
+    default: 'RuangKode — Belajar Coding. Langsung Praktik.',
+  },
   description:
-    'Platform pembelajaran pemrograman Python interaktif untuk mahasiswa Indonesia. Tulis kode, jalankan langsung di browser, dan kuasai konsepnya.',
+    'Platform pembelajaran pemrograman Python interaktif untuk mahasiswa Indonesia. Tulis kode, jalankan langsung di browser, dan kuasai konsepnya tanpa install apapun.',
+  keywords: ['belajar coding', 'python', 'belajar python', 'coding interaktif', 'mahasiswa IT', 'ruangkode'],
+  authors: [{ name: 'RuangKode Team' }],
+  creator: 'RuangKode',
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    url: 'https://ruangkode.com',
+    title: 'RuangKode — Belajar Coding. Langsung Praktik.',
+    description: 'Platform pembelajaran pemrograman Python interaktif untuk mahasiswa Indonesia.',
+    siteName: 'RuangKode',
+    images: [
+      {
+        url: 'https://ruangkode.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'RuangKode - Belajar Python Interaktif',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RuangKode — Belajar Coding. Langsung Praktik.',
+    description: 'Platform pembelajaran pemrograman Python interaktif untuk mahasiswa Indonesia.',
+    images: ['https://ruangkode.com/og-image.png'],
+  },
   icons: {
     icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
 };
 
 import { Toaster } from 'sonner';

@@ -8,7 +8,7 @@ import LessonContentPanel from './LessonContentPanel';
 import OutputConsolePanel from './OutputConsolePanel';
 import ExerciseSuccessModal from './ExerciseSuccessModal';
 import ResetConfirmModal from './ResetConfirmModal';
-import { runPythonCode } from '@/lib/pyodide';
+import { runPythonCode, getPyodideInstance } from '@/lib/pyodide';
 import { soundFx } from '@/lib/sound';
 import { BookOpen, Code2, Terminal, CheckCircle2 } from 'lucide-react';
 
@@ -98,6 +98,14 @@ export default function LearningWorkspaceClient({
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
+  // Preload Pyodide so execution is instant ("Wush Wush")
+  useEffect(() => {
+    // Only preload if it's not already preloading/loaded
+    getPyodideInstance(setPyodideStatus).catch(err => {
+      console.error('Failed to preload Pyodide:', err);
+      setPyodideStatus('Gagal memuat Pyodide');
+    });
+  }, []);
   // Modul A states: Hints, Reset Modal, Failed Attempts
   const [failedAttempts, setFailedAttempts] = useState<number>(0);
   const [isResetModalOpen, setIsResetModalOpen] = useState<boolean>(false);
