@@ -139,6 +139,21 @@ export default function LessonContentPanel({
         </div>
       )}
 
+      {/* Short Summary (First paragraph of content) */}
+      <div className="prose prose-sm prose-slate dark:prose-invert max-w-none text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            pre: () => null,
+            code: ({ node, ...props }) => (
+              <code {...props} className="rounded text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1 py-0.5" />
+            ),
+          }}
+        >
+          {content.split('\n\n')[0] + (content.split('\n\n').length > 1 ? '...' : '')}
+        </ReactMarkdown>
+      </div>
+
       {/* Buka Pembahasan Teori Button */}
       <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-3 shadow-xs">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
