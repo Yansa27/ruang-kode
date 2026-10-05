@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import NextLink from 'next/link';
 import {
   Users,
   Copy,
@@ -18,6 +19,14 @@ import {
   Crown
 } from 'lucide-react';
 
+interface ReferredUser {
+  id: string;
+  name: string;
+  joinedAt: Date;
+  xp: number;
+  streak: number;
+}
+
 interface ReferralClientProps {
   user: {
     id: string;
@@ -26,6 +35,7 @@ interface ReferralClientProps {
     xp: number;
     referralCount: number;
   };
+  referredUsers?: ReferredUser[];
 }
 
 const TIERS = [
@@ -35,7 +45,7 @@ const TIERS = [
   { count: 10, label: 'Partner', icon: Crown, xp: 1500 },
 ];
 
-export default function ReferralClient({ user }: ReferralClientProps) {
+export default function ReferralClient({ user, referredUsers = [] }: ReferralClientProps) {
   const [copied, setCopied] = useState<'code' | 'link' | null>(null);
 
   const referralLink =
@@ -199,6 +209,59 @@ export default function ReferralClient({ user }: ReferralClientProps) {
             </div>
           </div>
         </div>
+
+        {/* Referred Users List */}
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm mt-6">
+          <div className="px-5 sm:px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+              <Users className="h-4 w-4 text-blue-500" />
+              Teman yang Kamu Ajak ({referredUsers.length})
+            </h2>
+          </div>
+          
+          <div className="p-0">
+            {referredUsers.length > 0 ? (
+              <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                {referredUsers.map((rUser) => (
+                  <div key={rUser.id} className="flex items-center justify-between p-4 sm:px-6 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center font-bold text-lg">
+                        {rUser.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <NextLink href={`/u/${rUser.id}`} className="font-semibold text-sm text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition">
+                          {rUser.name}
+                        </NextLink>
+                        <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                          <span>Bergabung {new Date(rUser.joinedAt).toLocaleDateString('id-ID')}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-right">
+                      <div className="hidden sm:block">
+                        <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">{rUser.streak} Hari</div>
+                        <div className="text-[10px] text-slate-500 uppercase tracking-wider">Streak</div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-blue-600 dark:text-blue-400">{rUser.xp}</div>
+                        <div className="text-[10px] text-slate-500 uppercase tracking-wider">XP</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-10 text-center px-4">
+                <div className="h-12 w-12 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3">
+                  <Users className="h-6 w-6 text-slate-400" />
+                </div>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Belum ada teman yang bergabung</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Ayo bagikan link referralmu dan dapatkan XP bersama!</p>
+              </div>
+            )}
+          </div>
+        </div>
+
 
         {/* Mechanism */}
         <div className="bg-transparent pt-4">

@@ -117,9 +117,9 @@ export default function LeaderboardClient({
                   2
                 </div>
               </div>
-              <h3 className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px]">
+              <Link href={`/u/${top2.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition">
                 {top2.name}
-              </h3>
+              </Link>
               <p className="text-[10px] text-slate-400">Level {top2.level} Mahasiswa</p>
               <div className="mt-3 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700">
@@ -147,9 +147,9 @@ export default function LeaderboardClient({
                   👑
                 </div>
               </div>
-              <h3 className="font-bold text-base text-slate-900 mt-1 truncate max-w-[200px]">
+              <Link href={`/u/${top1.id}`} className="font-bold text-base text-slate-900 mt-1 truncate max-w-[200px] hover:text-blue-600 transition">
                 {top1.name}
-              </h3>
+              </Link>
               <p className="text-xs text-amber-700 font-semibold">Paling Aktif Pekan Ini</p>
               <div className="mt-3.5 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-800 shadow-2xs">
@@ -173,9 +173,9 @@ export default function LeaderboardClient({
                   3
                 </div>
               </div>
-              <h3 className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px]">
+              <Link href={`/u/${top3.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition">
                 {top3.name}
-              </h3>
+              </Link>
               <p className="text-[10px] text-slate-400">Level {top3.level} Mahasiswa</p>
               <div className="mt-3 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-bold text-amber-800">
@@ -306,9 +306,9 @@ export default function LeaderboardClient({
                     {/* Name & Role */}
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-semibold text-slate-900 truncate">
+                        <Link href={`/u/${student.id}`} className="font-semibold text-slate-900 truncate hover:text-blue-600 transition">
                           {student.name}
-                        </span>
+                        </Link>
                         {student.isCurrentUser && (
                           <span className="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-800">
                             Kamu

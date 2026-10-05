@@ -40,10 +40,27 @@ export default async function ReferralPage() {
     user.referralCode = code;
   }
 
-  // Count how many people used this user's referral code
-  const referredCount = await prisma.user.count({
+  // Count how many people used this user's referral code and get their basic info
+  const referredUsers = await prisma.user.findMany({
     where: { referredByCode: user.referralCode! },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      stats: {
+        select: { xp: true, streak: true }
+      }
+    },
+    orderBy: { createdAt: 'desc' }
   });
+
+  const formattedReferredUsers = referredUsers.map(u => ({
+    id: u.id,
+    name: u.name,
+    joinedAt: u.createdAt,
+    xp: u.stats?.xp || 0,
+    streak: u.stats?.streak || 1,
+  }));
 
   return (
     <AppShell
@@ -60,8 +77,9 @@ export default async function ReferralPage() {
           name: user.name,
           referralCode: user.referralCode!,
           xp: user.stats?.xp ?? 0,
-          referralCount: referredCount,
+          referralCount: referredUsers.length,
         }}
+        referredUsers={formattedReferredUsers}
       />
     </AppShell>
   );
