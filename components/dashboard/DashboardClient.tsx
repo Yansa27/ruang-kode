@@ -417,7 +417,7 @@ export default function DashboardClient({
                   <div className="flex -space-x-2">
                     {[1, 2, 3].map((i) => (
                       <div key={i} className="h-8 w-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 overflow-hidden relative">
-                        <Image src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="avatar" fill className="object-cover" />
+                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="avatar" className="h-full w-full object-cover" />
                       </div>
                     ))}
                   </div>
