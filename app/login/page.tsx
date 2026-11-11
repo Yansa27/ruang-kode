@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Terminal, Lock, Mail, ArrowRight, AlertCircle, Check } from 'lucide-react';
 
 import { toast } from 'sonner';
+import AuthAside from '@/components/layout/AuthAside';
 
 function LoginContent() {
   const router = useRouter();
@@ -51,48 +52,11 @@ function LoginContent() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Panel - Branding (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-slate-900 relative overflow-hidden px-12 py-16">
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 -left-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-        <div className="relative z-10">
-          <Link href="/" className="flex items-center gap-3 group w-fit">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg ring-1 ring-white/10 group-hover:scale-105 transition-transform duration-200">
-              <Terminal className="h-5 w-5" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight text-white">
-              Ruang<span className="text-blue-400">Kode</span>
-            </span>
-          </Link>
-        </div>
-
-        <div className="relative z-10 max-w-md">
-          <h1 className="text-4xl font-bold text-white tracking-tight mb-4">
-            Mulai Petualangan <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Coding Kamu</span>
-          </h1>
-          <p className="text-slate-300 text-base leading-relaxed mb-8">
-            Platform pembelajaran interaktif pertama di Indonesia. Belajar Python, kerjakan studi kasus nyata, dan pantau progres belajarmu.
-          </p>
-          <div className="flex items-center gap-4 text-sm font-medium text-slate-300">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className={`w-8 h-8 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center`}>
-                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i}&backgroundColor=e2e8f0`} alt="Avatar" className="w-full h-full rounded-full" />
-                </div>
-              ))}
-            </div>
-            <span>Bergabung dengan 1,000+ pelajar lainnya</span>
-          </div>
-        </div>
-      </div>
+    <div className="auth-page min-h-screen flex">
+      <AuthAside />
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex flex-col justify-center bg-white py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div className="auth-form-panel flex-1 flex flex-col justify-center bg-white py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {/* Mobile Logo */}
           <div className="flex lg:hidden justify-center mb-8">
@@ -128,12 +92,12 @@ function LoginContent() {
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Alamat Email</label>
+                <label htmlFor="login-field-1" className="block text-sm font-medium text-slate-700 mb-1.5">Alamat Email</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Mail className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="login-field-1"
                     type="email"
                     required
                     value={email}
@@ -145,12 +109,12 @@ function LoginContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+                <label htmlFor="login-field-2" className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Lock className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="login-field-2"
                     type="password"
                     required
                     value={password}

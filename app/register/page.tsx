@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2, Gift } from 'lucide-react';
 
 import { toast } from 'sonner';
+import AuthAside from '@/components/layout/AuthAside';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -52,56 +53,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Panel - Branding (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-slate-900 relative overflow-hidden px-12 py-16">
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-40 -right-40 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-        <div className="relative z-10">
-          <Link href="/" className="flex items-center gap-3 group w-fit">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg ring-1 ring-white/10 group-hover:scale-105 transition-transform duration-200">
-              <Terminal className="h-5 w-5" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight text-white">
-              Ruang<span className="text-blue-400">Kode</span>
-            </span>
-          </Link>
-        </div>
-
-        <div className="relative z-10 max-w-md">
-          <h1 className="text-4xl font-bold text-white tracking-tight mb-4">
-            Investasi Terbaik <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Untuk Masa Depanmu</span>
-          </h1>
-          <p className="text-slate-300 text-base leading-relaxed mb-8">
-            Daftar sekarang dan dapatkan akses ke seluruh materi pembelajaran coding. Praktik langsung di browser, kumpulkan XP, dan raih sertifikat kelulusan.
-          </p>
-          <div className="grid grid-cols-2 gap-4 text-sm font-medium text-slate-300">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800">🎯</div>
-              <span>Belajar Terstruktur</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800">💻</div>
-              <span>Live Code Editor</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800">🏆</div>
-              <span>Sertifikat Resmi</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800">⚡</div>
-              <span>Evaluasi Otomatis</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="auth-page min-h-screen flex">
+      <AuthAside />
 
       {/* Right Panel - Register Form */}
-      <div className="flex-1 flex flex-col justify-center bg-white py-10 px-4 sm:px-6 lg:px-20 xl:px-24 h-screen overflow-y-auto">
+      <div className="auth-form-panel flex-1 flex flex-col justify-center bg-white py-10 px-4 sm:px-6 lg:px-20 xl:px-24 min-h-screen">
         <div className="mx-auto w-full max-w-sm lg:w-[400px]">
           {/* Mobile Logo */}
           <div className="flex lg:hidden justify-center mb-8">
@@ -137,12 +93,12 @@ export default function RegisterPage() {
 
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Nama Lengkap *</label>
+                <label htmlFor="register-field-1" className="block text-sm font-medium text-slate-700 mb-1.5">Nama Lengkap *</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <User className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-1"
                     type="text"
                     required
                     value={name}
@@ -154,12 +110,12 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Email *</label>
+                <label htmlFor="register-field-2" className="block text-sm font-medium text-slate-700 mb-1.5">Email *</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Mail className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-2"
                     type="email"
                     required
                     value={email}
@@ -171,12 +127,12 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Nomor HP (WhatsApp) *</label>
+                <label htmlFor="register-field-3" className="block text-sm font-medium text-slate-700 mb-1.5">Nomor HP (WhatsApp) *</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Phone className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-3"
                     type="tel"
                     required
                     value={phoneNumber}
@@ -188,12 +144,12 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Asal Sekolah/Kampus/Instansi *</label>
+                <label htmlFor="register-field-4" className="block text-sm font-medium text-slate-700 mb-1.5">Asal Sekolah/Kampus/Instansi *</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Building2 className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-4"
                     type="text"
                     required
                     value={institution}
@@ -205,12 +161,12 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Password *</label>
+                <label htmlFor="register-field-5" className="block text-sm font-medium text-slate-700 mb-1.5">Password *</label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Lock className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-5"
                     type="password"
                     required
                     minLength={6}
@@ -223,14 +179,14 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label htmlFor="register-field-6" className="block text-sm font-medium text-slate-700 mb-1.5">
                   Kode Referral <span className="text-slate-400 font-normal text-xs">(opsional)</span>
                 </label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                     <Gift className="h-5 w-5 text-slate-400" />
                   </div>
-                  <input
+                  <input id="register-field-6"
                     type="text"
                     value={referralCode}
                     onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
