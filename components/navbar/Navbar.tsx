@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from '@/components/ui/icons';
 import Brand from '@/components/layout/Brand';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 

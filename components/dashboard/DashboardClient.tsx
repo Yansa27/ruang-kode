@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import AppShell from '@/components/layout/AppShell';
 import { soundFx } from '@/lib/sound';
 import {
+  Lock,
   LayoutDashboard,
   BookOpen,
   TrendingUp,
@@ -21,7 +22,6 @@ import {
   Code2,
   Clock,
   ArrowRight,
-  Sparkles,
   ChevronRight,
   Terminal,
   LogOut,
@@ -39,7 +39,7 @@ import {
   Trophy,
   MessageCircle,
   ExternalLink,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 interface LessonItem {
   id: string;
@@ -199,7 +199,7 @@ export default function DashboardClient({
       id: 'first_lesson',
       title: 'First Lesson',
       xp: '+50 XP',
-      icon: <Star className="h-4 w-4 fill-emerald-600 text-emerald-600" />,
+      icon: <Star className="h-4 w-4 text-emerald-600" />,
       badgeBg: 'bg-emerald-50 border-emerald-200/80 text-emerald-800',
       pillBg: 'bg-emerald-100/70 text-emerald-800',
       unlocked: completedCount >= 1,
@@ -217,7 +217,7 @@ export default function DashboardClient({
       id: 'consistent',
       title: 'Consistent',
       xp: '+150 XP',
-      icon: <Flame className="h-4 w-4 fill-amber-500 text-amber-500" />,
+      icon: <Flame className="h-4 w-4 text-amber-500" />,
       badgeBg: 'bg-amber-50 border-amber-200/80 text-amber-800',
       pillBg: 'bg-amber-100/70 text-amber-800',
       unlocked: (user.stats?.streak || 0) >= 2,
@@ -290,7 +290,7 @@ export default function DashboardClient({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="max-w-md z-10">
                   <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-0.5 text-[11px] font-semibold text-blue-700 dark:text-blue-400">
-                    <Sparkles className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                    <BookOpen className="h-3 w-3 text-blue-600 dark:text-blue-400" />
                     <span>CERITA KEDAI KODE</span>
                   </div>
 
@@ -328,7 +328,7 @@ export default function DashboardClient({
             </div>
 
             {/* Right Card: Target Belajar Berikutnya (4 cols) */}
-            <div className="lg:col-span-4 rounded-2xl border border-slate-800 bg-[#173c2b] p-5 sm:p-6 text-white shadow-xs flex flex-col justify-between">
+            <div className="lg:col-span-4 rounded-2xl border border-slate-800 bg-[#1c3192] p-5 sm:p-6 text-white shadow-xs flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="flex items-center gap-1.5 font-semibold text-blue-400">
@@ -356,7 +356,7 @@ export default function DashboardClient({
                     href={`/learn/${course.slug}/${nextLesson.slug}`}
                     className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 px-4 text-xs font-semibold text-white shadow-2xs hover:bg-blue-500 transition"
                   >
-                    <Play className="h-3 w-3 fill-white" />
+                    <Play className="h-3 w-3 " />
                     <span>Lanjutkan cerita</span>
                     <ArrowRight className="h-3.5 w-3.5 ml-auto" />
                   </Link>
@@ -420,7 +420,7 @@ export default function DashboardClient({
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Streak Belajar</span>
                 <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-orange-50 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-900/60">
-                  <Flame className="h-4 w-4 fill-orange-500 text-orange-500" />
+                  <Flame className="h-4 w-4 text-orange-500" />
                 </div>
               </div>
               <div className="mt-2 flex items-baseline gap-2">
@@ -460,7 +460,7 @@ export default function DashboardClient({
               </div>
               <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 flex items-end justify-between">
                 <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/60">
-                  <Zap className="h-3 w-3 fill-emerald-600 text-emerald-600" />
+                  <Zap className="h-3 w-3 text-emerald-600" />
                   <span>+30 XP per exercise selesai</span>
                 </span>
                 <svg className="w-16 h-6 text-blue-500 opacity-60" viewBox="0 0 100 30" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -610,7 +610,7 @@ export default function DashboardClient({
                         <div className="flex items-center justify-between mb-1">
                           {isCurrent ? (
                             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-white">
-                              <Play className="h-3.5 w-3.5 fill-white" />
+                              <Play className="h-3.5 w-3.5 " />
                             </div>
                           ) : isAllDone ? (
                             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400">
@@ -618,7 +618,7 @@ export default function DashboardClient({
                             </div>
                           ) : (
                             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400">
-                              <span className="text-[10px]"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                              <span className="text-[10px]"><Lock size={12} /></span>
                             </div>
                           )}
                           {!isCurrent && <ChevronRight className={`h-4 w-4 ${isLocked ? 'text-slate-300' : 'text-slate-400'}`} />}
@@ -763,7 +763,7 @@ export default function DashboardClient({
                         >
                           <Zap
                             className={`h-3 w-3 ${
-                              student.rank === 1 ? 'fill-amber-500 text-amber-500' : 'fill-slate-400 text-slate-400'
+                              student.rank === 1 ? 'text-amber-500' : 'text-slate-400'
                             }`}
                           />
                           {student.xp} XP

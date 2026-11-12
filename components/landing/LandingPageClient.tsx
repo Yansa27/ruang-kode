@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Play, RotateCcw, Check } from 'lucide-react';
+import { Play, RotateCcw, Check } from '@/components/ui/icons';
 
 export default function LandingPageClient() {
   const [ran, setRan] = useState(false);
@@ -15,7 +15,7 @@ export default function LandingPageClient() {
       <div><i>6</i><span> </span></div>
       <div><i>7</i><span><strong>print</strong>(sapa(nama))</span></div>
     </div>
-    <div className="demo-toolbar"><span>Python 3 <span>•</span> Contoh interaktif</span><button onClick={() => setRan(!ran)}>{ran ? <RotateCcw size={14} /> : <Play size={14} fill="currentColor" />}{ran ? 'Ulangi contoh' : 'Lihat hasil'}</button></div>
+    <div className="demo-toolbar"><span>Python 3 <span>•</span> Contoh interaktif</span><button onClick={() => setRan(!ran)}>{ran ? <RotateCcw size={14} /> : <Play size={14} />}{ran ? 'Ulangi contoh' : 'Lihat hasil'}</button></div>
     <div className="demo-output" aria-live="polite"><span className="output-label">OUTPUT</span>{ran ? <><p>Halo, Developer masa depan!</p><span className="output-success"><Check size={13} /> Begitu cara fungsi menghasilkan output.</span></> : <><p className="output-placeholder">Hasil kodemu akan muncul di sini.</p><span className="output-hint">Klik “Lihat hasil” untuk mencoba contoh.</span></>}</div>
   </div>;
 }

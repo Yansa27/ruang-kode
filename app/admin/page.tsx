@@ -3,7 +3,7 @@ import AppShell from '@/components/layout/AppShell';
 import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import AdminDashboardClient from './AdminDashboardClient';
-import { Shield } from 'lucide-react';
+import { Shield } from '@/components/ui/icons';
 
 export const dynamic = 'force-dynamic';
 

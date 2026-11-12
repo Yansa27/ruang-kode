@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from '@/components/ui/icons';
 import { getStoredTheme, toggleTheme, Theme } from '@/lib/theme';
 
 interface ThemeToggleProps {

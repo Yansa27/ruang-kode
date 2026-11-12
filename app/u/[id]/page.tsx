@@ -15,7 +15,7 @@ import {
   BookOpen,
   Activity,
   History,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 const timeAgo = (date: Date) => {
   const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);

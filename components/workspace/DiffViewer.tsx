@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { AlertCircle, Columns, List, Check, HelpCircle } from 'lucide-react';
+import { AlertCircle, Columns, List, Check, HelpCircle } from '@/components/ui/icons';
 
 interface DiffViewerProps {
   expected: string;

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Flame, Zap, CheckCircle2, ChevronRight, Menu, Volume2, VolumeX, WifiOff } from 'lucide-react';
+import { ArrowLeft, BookOpen, Flame, Zap, CheckCircle2, ChevronRight, Menu, Volume2, VolumeX, WifiOff } from '@/components/ui/icons';
 import { useState, useEffect } from 'react';
 import { soundFx } from '@/lib/sound';
 import ThemeToggle from '@/components/theme/ThemeToggle';
@@ -88,7 +88,7 @@ export default function WorkspaceNavbar({
             title="Streak harian"
             className="flex items-center gap-1 rounded-full border border-orange-200 bg-orange-50 px-2 py-0.5 text-orange-700"
           >
-            <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
+            <Flame className="h-3.5 w-3.5 text-orange-500" />
             <span>{userStats?.streak || 1}d</span>
           </div>
 
@@ -96,7 +96,7 @@ export default function WorkspaceNavbar({
             title="Total XP"
             className="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-700"
           >
-            <Zap className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+            <Zap className="h-3.5 w-3.5 text-amber-500" />
             <span>{userStats?.xp || 0} XP</span>
           </div>
         </div>

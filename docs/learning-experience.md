@@ -29,3 +29,13 @@ Cerita dapat dibuka kembali tanpa menghapus draft editor. Slide tidak mengubah s
 - Seluruh 14 contoh cerita dijalankan dengan Python dan dicocokkan dengan output yang ditampilkan.
 
 Lint repository secara keseluruhan masih memiliki temuan pada kode lama. Komponen cerita dan data cerita lulus pemeriksaan ESLint terarah.
+
+## Versi visual
+
+Slide cerita menampilkan ilustrasi SVG Kedai Kode dan satu kalimat pengantar. Untuk 14 materi bawaan, peta konsep interaktif dibuat di `lib/lesson-visuals.ts` dan dirender oleh `LessonIllustration.tsx`: alur input/output, kotak variabel, tipe data, pembagian kue, percabangan, perulangan, dan list. Pengguna dapat mengeklik setiap bagian untuk membaca satu penjelasan singkat. Teks teori, tujuan belajar, dan alasan jawaban kuis tersedia melalui bagian yang dapat dibuka. Instruksi latihan asli tetap ditampilkan lengkap agar syarat penilaian tidak hilang.
+
+Preview komponen terpisah dari database dipakai untuk memeriksa desktop 1440px dan mobile 390px: delapan variasi visual, pilihan diagram, hasil contoh, kuis, dan tombol praktik. Ini bukan pengganti pengujian integrasi API/database.
+
+## Palet warna terbaru
+
+Identitas memakai biru cerah `#3456e3`, teks navy `#182544`, latar terang `#f7f9ff`, serta aksen coral dan kuning pada ilustrasi. Mode gelap memakai latar `#0c1427`, permukaan `#16233c`, dan aksen teks `#9db8ff`. Palet berlaku melalui token Tailwind dan variabel CSS untuk semua halaman; warna status sukses/gagal tetap punya makna tersendiri. Kontras tombol utama 5,86:1; teks sekunder terang 5,29:1; teks sekunder gelap 7,92:1.

@@ -8,9 +8,8 @@ import {
   Flame,
   Zap,
   Search,
-  Sparkles,
   Calendar,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 import AppShell from '@/components/layout/AppShell';
 
 interface StudentRank {
@@ -66,7 +65,7 @@ export default function LeaderboardClient({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs dark:bg-slate-900 dark:border-slate-800">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-800">
-              <Sparkles className="h-3 w-3 text-amber-500" />
+              <Trophy className="h-3 w-3 text-amber-500" />
               <span>Leaderboard Mahasiswa</span>
             </div>
             <h1 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl tracking-tight dark:text-slate-100">
@@ -123,11 +122,11 @@ export default function LeaderboardClient({
               <p className="text-[10px] text-slate-400">Level {top2.level} Mahasiswa</p>
               <div className="mt-3 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-100 dark:border-slate-800">
-                  <Zap className="h-3 w-3 fill-slate-500 text-slate-500 dark:text-slate-400" />
+                  <Zap className="h-3 w-3 text-slate-500 dark:text-slate-400" />
                   <span>{top2.xp} XP</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 border border-orange-200 px-2 py-0.5 text-[10px] font-semibold text-orange-700">
-                  <Flame className="h-3 w-3 fill-orange-500 text-orange-500" />
+                  <Flame className="h-3 w-3 text-orange-500" />
                   <span>{top2.streak}d</span>
                 </span>
               </div>
@@ -136,7 +135,7 @@ export default function LeaderboardClient({
             {/* Rank 1 (Gold - Elevated) */}
             <div className="order-1 md:order-2 rounded-2xl border-2 border-amber-300 bg-linear-to-b from-amber-50/50 to-white p-6 shadow-md text-center flex flex-col items-center relative -mt-2">
               <div className="absolute -top-3.5 flex items-center gap-1 rounded-full bg-amber-500 px-3 py-0.5 text-[10px] font-black text-white shadow-xs">
-                <Crown className="h-3 w-3 fill-white" />
+                <Crown className="h-3 w-3 " />
                 <span>PERINGKAT #1</span>
               </div>
               <div className="relative mt-2 mb-2">
@@ -153,11 +152,11 @@ export default function LeaderboardClient({
               <p className="text-xs text-amber-700 font-semibold">Paling Aktif Pekan Ini</p>
               <div className="mt-3.5 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-800 shadow-2xs">
-                  <Zap className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                  <Zap className="h-3.5 w-3.5 text-amber-500" />
                   <span>{top1.xp} XP</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-orange-100 border border-orange-200 px-2.5 py-1 text-xs font-semibold text-orange-800">
-                  <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
+                  <Flame className="h-3.5 w-3.5 text-orange-500" />
                   <span>{top1.streak} Hari</span>
                 </span>
               </div>
@@ -179,11 +178,11 @@ export default function LeaderboardClient({
               <p className="text-[10px] text-slate-400">Level {top3.level} Mahasiswa</p>
               <div className="mt-3 flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-bold text-amber-800">
-                  <Zap className="h-3 w-3 fill-amber-500 text-amber-500" />
+                  <Zap className="h-3 w-3 text-amber-500" />
                   <span>{top3.xp} XP</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 border border-orange-200 px-2 py-0.5 text-[10px] font-semibold text-orange-700">
-                  <Flame className="h-3 w-3 fill-orange-500 text-orange-500" />
+                  <Flame className="h-3 w-3 text-orange-500" />
                   <span>{top3.streak}d</span>
                 </span>
               </div>
@@ -221,11 +220,11 @@ export default function LeaderboardClient({
 
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5 rounded-xl bg-white border border-blue-200 px-3 py-1.5 text-xs font-bold text-blue-900 shadow-2xs dark:bg-slate-900">
-                <Zap className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                <Zap className="h-3.5 w-3.5 text-amber-500" />
                 <span>{currentUser.xp} XP</span>
               </div>
               <div className="flex items-center gap-1.5 rounded-xl bg-white border border-orange-200 px-3 py-1.5 text-xs font-bold text-orange-800 shadow-2xs dark:bg-slate-900">
-                <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
+                <Flame className="h-3.5 w-3.5 text-orange-500" />
                 <span>{currentUser.streak} Hari</span>
               </div>
               <Link
@@ -324,12 +323,12 @@ export default function LeaderboardClient({
                   {/* Right Stats: Streak & XP */}
                   <div className="flex items-center gap-3 sm:gap-6 shrink-0">
                     <div className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400">
-                      <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
+                      <Flame className="h-3.5 w-3.5 text-orange-500" />
                       <span className="font-semibold text-slate-700 dark:text-slate-100">{student.streak}d</span>
                     </div>
 
                     <div className="flex items-center gap-1 font-bold text-blue-700 min-w-[70px] justify-end">
-                      <Zap className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                      <Zap className="h-3.5 w-3.5 text-amber-500" />
                       <span>{student.xp} XP</span>
                     </div>
                   </div>

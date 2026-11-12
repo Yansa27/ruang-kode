@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Terminal, Lock, Mail, ArrowRight, AlertCircle, Check } from 'lucide-react';
+import { Terminal, Lock, Mail, ArrowRight, AlertCircle, Check } from '@/components/ui/icons';
 
 import { toast } from 'sonner';
 import AuthAside from '@/components/layout/AuthAside';

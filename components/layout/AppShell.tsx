@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, BookOpen, Trophy, Users, UserRound, Shield, Search, LogOut, Menu, X, ArrowUpRight, WifiOff } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Trophy, Users, UserRound, Shield, Search, LogOut, Menu, X, ArrowUpRight, WifiOff } from '@/components/ui/icons';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import { useNetworkStatus } from '@/lib/offline';
 import CommandPalette from './CommandPalette';

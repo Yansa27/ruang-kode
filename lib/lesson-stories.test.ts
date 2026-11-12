@@ -28,3 +28,13 @@ test('Markdown pagination keeps a heading with the following paragraph', () => {
 test('empty material does not create empty slides', () => {
   assert.deepEqual(splitLessonContent(' \n\n'), []);
 });
+
+test('every authored story has a concise visual lesson', async () => {
+  const { lessonVisuals } = await import('./lesson-visuals');
+  assert.deepEqual(Object.keys(lessonVisuals).sort(), Object.keys(lessonStories).sort());
+  for (const visual of Object.values(lessonVisuals)) {
+    assert.ok(visual.intro.split(/\s+/).length <= 20);
+    assert.ok(visual.steps.length >= 3);
+    assert.ok(visual.steps.every(step => step.value && step.note && step.label));
+  }
+});

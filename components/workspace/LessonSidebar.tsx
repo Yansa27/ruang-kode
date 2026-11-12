@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { CheckCircle2, Circle, PlayCircle, X } from 'lucide-react';
+import { CheckCircle2, Circle, PlayCircle, X } from '@/components/ui/icons';
 
 interface LessonItem {
   id: string;

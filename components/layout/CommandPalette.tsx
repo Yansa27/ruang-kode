@@ -18,7 +18,7 @@ import {
   Hash,
   Code2,
   ShieldCheck,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 interface CommandItem {
   id: string;

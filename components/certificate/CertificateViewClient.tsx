@@ -13,7 +13,7 @@ import {
   Download,
   ExternalLink,
   Award,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 interface CertificateData {
   id: string;

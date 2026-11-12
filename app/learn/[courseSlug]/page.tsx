@@ -14,7 +14,7 @@ import {
   Code2,
   Clock,
   ChevronRight,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 export const dynamic = 'force-dynamic';
 

@@ -3,7 +3,7 @@ import Navbar from '@/components/navbar/Navbar';
 import Footer from '@/components/layout/Footer';
 import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { ArrowUpRight, ArrowRight, Check, Code2, BookOpen, Terminal, Trophy } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Check, Code2, BookOpen, Terminal, Trophy } from '@/components/ui/icons';
 import LandingPageClient from '@/components/landing/LandingPageClient';
 
 export const dynamic = 'force-dynamic';

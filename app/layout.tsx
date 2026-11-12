@@ -75,7 +75,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 transition-colors duration-150"
       >
         <NextTopLoader
-          color="#13745b"
+          color="#3456e3"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -83,7 +83,7 @@ export default function RootLayout({
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 10px #13745b,0 0 5px #13745b"
+          shadow="0 0 10px #3456e3,0 0 5px #3456e3"
           zIndex={1600}
         />
         {children}

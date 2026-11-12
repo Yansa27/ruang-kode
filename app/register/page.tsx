@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2, Gift } from 'lucide-react';
+import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2, Gift } from '@/components/ui/icons';
 
 import { toast } from 'sonner';
 import AuthAside from '@/components/layout/AuthAside';

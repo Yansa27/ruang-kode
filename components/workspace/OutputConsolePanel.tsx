@@ -13,7 +13,7 @@ import {
   Lightbulb,
   ChevronDown,
   ChevronUp,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 import DiffViewer from './DiffViewer';
 
 interface TestCaseResult {

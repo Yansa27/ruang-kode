@@ -16,7 +16,7 @@ import {
   Terminal,
   ArrowRight,
   BookOpen,
-} from 'lucide-react';
+} from '@/components/ui/icons';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 
 interface VerifiedCertificate {

@@ -1,6 +1,6 @@
 'use client';
 
-import { RotateCcw, AlertCircle, X } from 'lucide-react';
+import { RotateCcw, AlertCircle, X } from '@/components/ui/icons';
 
 interface ResetConfirmModalProps {
   isOpen: boolean;

@@ -12,7 +12,7 @@ import ResetConfirmModal from './ResetConfirmModal';
 import { runPythonCode, getPyodideInstance } from '@/lib/pyodide';
 import { soundFx } from '@/lib/sound';
 import { DraftSaver, type SaveStatus } from '@/lib/draft-saver';
-import { BookOpen, Code2, Terminal, CheckCircle2 } from 'lucide-react';
+import { BookOpen, Code2, Terminal, CheckCircle2 } from '@/components/ui/icons';
 
 const MonacoEditorWrapper = dynamic(() => import('./MonacoEditorWrapper'), { ssr: false, loading: () => <div className="h-full w-full flex items-center justify-center bg-slate-50 dark:bg-slate-900"><div className="animate-pulse flex flex-col items-center"><Code2 className="h-8 w-8 text-slate-300 mb-2" /><span className="text-xs text-slate-400">Memuat Editor...</span></div></div> });
 

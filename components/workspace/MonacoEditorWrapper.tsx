@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import type { OnMount } from '@monaco-editor/react';
 import type { SaveStatus } from '@/lib/draft-saver';
-import { Play, RotateCcw, Send, Loader2, CheckCircle2 } from 'lucide-react';
+import { Play, RotateCcw, Send, Loader2, CheckCircle2 } from '@/components/ui/icons';
 
 // Lazy load Monaco Editor
 const Editor = dynamic(() => import('@monaco-editor/react'), {
@@ -133,7 +133,7 @@ export default function MonacoEditorWrapper({
             {isRunning ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-400" />
             ) : (
-              <Play className="h-3.5 w-3.5 text-blue-400 fill-blue-400" />
+              <Play className="h-3.5 w-3.5 text-blue-400 " />
             )}
             <span>{isRunning ? 'Running...' : 'Run'}</span>
             <kbd

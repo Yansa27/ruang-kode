@@ -17,7 +17,7 @@ import {
   Award,
   Medal,
   Crown
-} from 'lucide-react';
+} from '@/components/ui/icons';
 
 interface ReferredUser {
   id: string;

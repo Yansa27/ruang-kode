@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { CheckCircle2, Zap, ArrowRight, RotateCcw, BookOpen } from 'lucide-react';
+import { CheckCircle2, Zap, ArrowRight, RotateCcw, BookOpen } from '@/components/ui/icons';
 import Link from 'next/link';
 
 interface ExerciseSuccessModalProps {
@@ -72,7 +72,7 @@ export default function ExerciseSuccessModal({
 
         {earnedXp > 0 && (
           <div className="my-5 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-sm font-bold text-amber-800 shadow-xs">
-            <Zap className="h-4 w-4 fill-amber-500 text-amber-500" />
+            <Zap className="h-4 w-4 text-amber-500" />
             <span>+{earnedXp} XP Diperoleh</span>
           </div>
         )}
