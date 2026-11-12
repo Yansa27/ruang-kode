@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Terminal, Lock, Mail, User, ArrowRight, AlertCircle, Phone, Building2, Gift } from 'lucide-react';
 
@@ -9,7 +8,6 @@ import { toast } from 'sonner';
 import AuthAside from '@/components/layout/AuthAside';
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,9 +43,10 @@ export default function RegisterPage() {
 
       toast.success('Pendaftaran berhasil! Mengarahkan...', { id: toastId });
       window.location.href = '/dashboard';
-    } catch (err: any) {
-      toast.error(err.message, { id: toastId });
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Terjadi kesalahan. Silakan coba lagi.';
+      toast.error(message, { id: toastId });
+      setError(message);
       setIsLoading(false);
     }
   };

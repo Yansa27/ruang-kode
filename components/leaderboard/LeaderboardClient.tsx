@@ -63,22 +63,22 @@ export default function LeaderboardClient({
     <AppShell user={user}>
       <main className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6">
         {/* Banner Hero & Period Toggle */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs dark:bg-slate-900 dark:border-slate-800">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-800">
               <Sparkles className="h-3 w-3 text-amber-500" />
               <span>Leaderboard Mahasiswa</span>
             </div>
-            <h1 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl tracking-tight">
+            <h1 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl tracking-tight dark:text-slate-100">
               Papan Peringkat Prestasi
             </h1>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
               Diperbarui secara realtime berdasarkan perolehan XP dan konsistensi streak pengerjaan materi.
             </p>
           </div>
 
           {/* Period Toggle Tabs */}
-          <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 self-start sm:self-auto border border-slate-200/80">
+          <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 self-start sm:self-auto border border-slate-200/80 dark:border-slate-800">
             <button
               onClick={() => setActivePeriod('weekly')}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
@@ -108,22 +108,22 @@ export default function LeaderboardClient({
         {initialLeaderboard.length >= 3 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end pt-2">
             {/* Rank 2 (Silver) */}
-            <div className="order-2 md:order-1 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs text-center flex flex-col items-center">
+            <div className="order-2 md:order-1 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs text-center flex flex-col items-center dark:bg-slate-900 dark:border-slate-800">
               <div className="relative mb-2">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 border-2 border-slate-300 text-base font-bold text-slate-700 shadow-2xs">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 border-2 border-slate-300 text-base font-bold text-slate-700 shadow-2xs dark:text-slate-100">
                   {top2.name.charAt(0)}
                 </div>
-                <div className="absolute -top-2 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 border border-white text-slate-700 text-xs font-black shadow-2xs">
+                <div className="absolute -top-2 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 border border-white text-slate-700 text-xs font-black shadow-2xs dark:text-slate-100">
                   2
                 </div>
               </div>
-              <Link href={`/u/${top2.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition">
+              <Link href={`/u/${top2.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition dark:text-slate-100">
                 {top2.name}
               </Link>
               <p className="text-[10px] text-slate-400">Level {top2.level} Mahasiswa</p>
               <div className="mt-3 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700">
-                  <Zap className="h-3 w-3 fill-slate-500 text-slate-500" />
+                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-100 dark:border-slate-800">
+                  <Zap className="h-3 w-3 fill-slate-500 text-slate-500 dark:text-slate-400" />
                   <span>{top2.xp} XP</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 border border-orange-200 px-2 py-0.5 text-[10px] font-semibold text-orange-700">
@@ -147,7 +147,7 @@ export default function LeaderboardClient({
                   👑
                 </div>
               </div>
-              <Link href={`/u/${top1.id}`} className="font-bold text-base text-slate-900 mt-1 truncate max-w-[200px] hover:text-blue-600 transition">
+              <Link href={`/u/${top1.id}`} className="font-bold text-base text-slate-900 mt-1 truncate max-w-[200px] hover:text-blue-600 transition dark:text-slate-100">
                 {top1.name}
               </Link>
               <p className="text-xs text-amber-700 font-semibold">Paling Aktif Pekan Ini</p>
@@ -164,7 +164,7 @@ export default function LeaderboardClient({
             </div>
 
             {/* Rank 3 (Bronze) */}
-            <div className="order-3 md:order-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs text-center flex flex-col items-center">
+            <div className="order-3 md:order-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs text-center flex flex-col items-center dark:bg-slate-900 dark:border-slate-800">
               <div className="relative mb-2">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-50 border-2 border-amber-200 text-base font-bold text-amber-800 shadow-2xs">
                   {top3.name.charAt(0)}
@@ -173,7 +173,7 @@ export default function LeaderboardClient({
                   3
                 </div>
               </div>
-              <Link href={`/u/${top3.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition">
+              <Link href={`/u/${top3.id}`} className="font-bold text-sm text-slate-900 mt-1 truncate max-w-[180px] hover:text-blue-600 transition dark:text-slate-100">
                 {top3.name}
               </Link>
               <p className="text-[10px] text-slate-400">Level {top3.level} Mahasiswa</p>
@@ -200,7 +200,7 @@ export default function LeaderboardClient({
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold text-slate-900">
+                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
                     Posisi Kamu: Peringkat #{currentUser.rank}
                   </span>
                   <span className="rounded bg-blue-100 px-2 py-0.2 text-[10px] font-bold text-blue-800">
@@ -210,7 +210,7 @@ export default function LeaderboardClient({
                 <p className="text-xs text-slate-600 mt-0.5">
                   {currentUser.aboveUserName && currentUser.nextRankXpDifference ? (
                     <span>
-                      Butuh <strong className="text-blue-700 font-bold">+{currentUser.nextRankXpDifference} XP</strong> lagi untuk menyalip <span className="font-semibold text-slate-800">{currentUser.aboveUserName}</span>!
+                      Butuh <strong className="text-blue-700 font-bold">+{currentUser.nextRankXpDifference} XP</strong> lagi untuk menyalip <span className="font-semibold text-slate-800 dark:text-slate-100">{currentUser.aboveUserName}</span>!
                     </span>
                   ) : (
                     <span>Hebat! Kamu memimpin di posisi puncak pekan ini.</span>
@@ -220,11 +220,11 @@ export default function LeaderboardClient({
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 rounded-xl bg-white border border-blue-200 px-3 py-1.5 text-xs font-bold text-blue-900 shadow-2xs">
+              <div className="flex items-center gap-1.5 rounded-xl bg-white border border-blue-200 px-3 py-1.5 text-xs font-bold text-blue-900 shadow-2xs dark:bg-slate-900">
                 <Zap className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
                 <span>{currentUser.xp} XP</span>
               </div>
-              <div className="flex items-center gap-1.5 rounded-xl bg-white border border-orange-200 px-3 py-1.5 text-xs font-bold text-orange-800 shadow-2xs">
+              <div className="flex items-center gap-1.5 rounded-xl bg-white border border-orange-200 px-3 py-1.5 text-xs font-bold text-orange-800 shadow-2xs dark:bg-slate-900">
                 <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
                 <span>{currentUser.streak} Hari</span>
               </div>
@@ -239,11 +239,11 @@ export default function LeaderboardClient({
         )}
 
         {/* FULL RANKING TABLE */}
-        <div className="rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden">
+        <div className="rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden dark:bg-slate-900 dark:border-slate-800">
           {/* Table Header & Search */}
           <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-slate-900">
+              <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
                 Seluruh Mahasiswa Terdaftar
               </h2>
               <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600">
@@ -259,7 +259,7 @@ export default function LeaderboardClient({
                 placeholder="Cari nama mahasiswa..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10 transition"
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10 transition dark:text-slate-100 dark:border-slate-800"
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function LeaderboardClient({
                           1
                         </span>
                       ) : student.rank === 2 ? (
-                        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-slate-800 text-[11px] font-bold shadow-2xs">
+                        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-slate-800 text-[11px] font-bold shadow-2xs dark:text-slate-100">
                           2
                         </span>
                       ) : student.rank === 3 ? (
@@ -306,7 +306,7 @@ export default function LeaderboardClient({
                     {/* Name & Role */}
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <Link href={`/u/${student.id}`} className="font-semibold text-slate-900 truncate hover:text-blue-600 transition">
+                        <Link href={`/u/${student.id}`} className="font-semibold text-slate-900 truncate hover:text-blue-600 transition dark:text-slate-100">
                           {student.name}
                         </Link>
                         {student.isCurrentUser && (
@@ -323,9 +323,9 @@ export default function LeaderboardClient({
 
                   {/* Right Stats: Streak & XP */}
                   <div className="flex items-center gap-3 sm:gap-6 shrink-0">
-                    <div className="hidden sm:flex items-center gap-1 text-slate-500">
+                    <div className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400">
                       <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
-                      <span className="font-semibold text-slate-700">{student.streak}d</span>
+                      <span className="font-semibold text-slate-700 dark:text-slate-100">{student.streak}d</span>
                     </div>
 
                     <div className="flex items-center gap-1 font-bold text-blue-700 min-w-[70px] justify-end">

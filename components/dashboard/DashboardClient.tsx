@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import AppShell from '@/components/layout/AppShell';
 import { soundFx } from '@/lib/sound';
@@ -229,6 +228,7 @@ export default function DashboardClient({
     <AppShell user={user} courseSlug={course.slug}>
       {/* DASHBOARD CONTENT BODY */}
       <main className="p-4 sm:p-6 lg:p-7 space-y-5 max-w-7xl w-full mx-auto">
+        <header className="dashboard-heading"><div><p className="eyebrow">PERJALANAN BELAJARMU</p><h1>Selamat belajar, {user.name.split(' ')[0]}.</h1><p>Tidak perlu terburu-buru. Lanjutkan satu langkah hari ini.</p></div><Link href={`/learn/${course.slug}`} className="button-text">Lihat jalur belajar <ArrowRight size={16} /></Link></header>
         {/* Certificate Completion & Claim Banner */}
         {progressPercent >= 100 && (
           <div className="rounded-2xl border-2 border-amber-500/50 bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-blue-500/10 dark:from-amber-950/40 dark:via-slate-900 dark:to-blue-950/30 p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -286,20 +286,20 @@ export default function DashboardClient({
         {/* ROW 1: Hero Welcome Banner & Target Belajar Berikutnya */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* Left Hero Card (~7-8 cols) */}
-            <div className="lg:col-span-8 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs flex flex-col justify-between relative overflow-hidden">
+            <div className="dashboard-welcome lg:col-span-8 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs flex flex-col justify-between relative overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="max-w-md z-10">
                   <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 dark:border-blue-900/60 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-0.5 text-[11px] font-semibold text-blue-700 dark:text-blue-400">
                     <Sparkles className="h-3 w-3 text-blue-600 dark:text-blue-400" />
-                    <span>Selamat Datang di RuangKode! 👋</span>
+                    <span>CERITA KEDAI KODE</span>
                   </div>
 
-                  <h1 className="mt-2.5 text-2xl sm:text-[26px] font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
-                    Semangat Belajar, <span className="text-blue-600 dark:text-blue-400">{user.name}!</span>
-                  </h1>
+                  <h2 className="mt-2.5 text-2xl sm:text-[26px] font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                    Dari satu cerita, jadi satu kemampuan.
+                  </h2>
 
                   <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Kamu sudah menyelesaikan <span className="font-semibold text-slate-900 dark:text-white">{completedCount} dari {totalLessons} materi</span> di course Python Fundamental. Terus konsisten, hasil besar selalu dimulai dari langkah kecil!
+                    Kamu sudah menyelesaikan <span className="font-semibold text-slate-900 dark:text-white">{completedCount} dari {totalLessons} materi</span> di Python Fundamental. Ikuti ceritanya, pahami konsepnya, lalu coba sendiri.
                   </p>
 
                   <div className="mt-5 flex flex-wrap items-center gap-2.5">
@@ -318,30 +318,17 @@ export default function DashboardClient({
                       className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/80 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition"
                     >
                       <BookOpen className="h-3.5 w-3.5 text-slate-400" />
-                      <span>Lihat Course</span>
+                      <span>Lihat kelas</span>
                     </Link>
                   </div>
                 </div>
 
-                {/* Clean Developer Vector Illustration */}
-                <div className="relative w-full sm:w-52 h-36 sm:h-40 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-2xs shrink-0 self-center">
-                  <Image
-                    src="/images/student_coding.jpg"
-                    alt="Mahasiswa belajar koding Python"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 220px"
-                    priority
-                  />
-                  <div className="absolute top-2 right-2 rounded-md bg-white/95 dark:bg-slate-900/95 px-2 py-0.5 text-[9px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 shadow-2xs">
-                    Python 3.12
-                  </div>
-                </div>
+                <div className="dashboard-progress" aria-label={`Progres kelas ${progressPercent}%`}><div style={{ background: `conic-gradient(var(--primary) ${progressPercent}%, var(--border) 0)` }}><span><strong>{progressPercent}%</strong><small>perjalananmu</small></span></div><p>{completedCount} / {totalLessons} materi selesai</p></div>
               </div>
             </div>
 
             {/* Right Card: Target Belajar Berikutnya (4 cols) */}
-            <div className="lg:col-span-4 rounded-2xl border border-slate-800 bg-[#0F172A] p-5 sm:p-6 text-white shadow-xs flex flex-col justify-between">
+            <div className="lg:col-span-4 rounded-2xl border border-slate-800 bg-[#173c2b] p-5 sm:p-6 text-white shadow-xs flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="flex items-center gap-1.5 font-semibold text-blue-400">
@@ -370,7 +357,7 @@ export default function DashboardClient({
                     className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 px-4 text-xs font-semibold text-white shadow-2xs hover:bg-blue-500 transition"
                   >
                     <Play className="h-3 w-3 fill-white" />
-                    <span>Buka Coding Workspace</span>
+                    <span>Lanjutkan cerita</span>
                     <ArrowRight className="h-3.5 w-3.5 ml-auto" />
                   </Link>
                 )}
@@ -407,29 +394,19 @@ export default function DashboardClient({
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">Gabung Komunitas RuangKode</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-xl leading-relaxed">
-                    Tanya jawab seputar materi, diskusi coding, dan bangun koneksi bersama ratusan pelajar lainnya di grup diskusi resmi kami.
+                    Tanya jawab seputar materi dan diskusikan kode yang sedang kamu pelajari.
                   </p>
                 </div>
               </div>
               
               <div className="flex items-center gap-4 shrink-0">
-                <div className="hidden md:flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-8 w-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 overflow-hidden relative">
-                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="avatar" className="h-full w-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">+2.4k anggota aktif</span>
-                </div>
                 <a
                   href={communityLink}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition"
                 >
-                  <span>Join Grup Sekarang</span>
+                  <span>Buka grup diskusi</span>
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </div>

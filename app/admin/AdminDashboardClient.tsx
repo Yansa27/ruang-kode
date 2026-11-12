@@ -232,44 +232,44 @@ export default function AdminDashboardClient({
     <div className="space-y-8">
       {/* CMS Top Stats Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-          <div className="flex items-center gap-2 text-slate-500">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:bg-slate-900 dark:border-slate-800">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
             <Users className="h-4 w-4 text-blue-600" />
             <span className="text-xs font-medium">Total Akun Terdaftar</span>
           </div>
-          <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalUsers}</p>
+          <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.totalUsers}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-          <div className="flex items-center gap-2 text-slate-500">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:bg-slate-900 dark:border-slate-800">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
             <BookOpen className="h-4 w-4 text-emerald-600" />
             <span className="text-xs font-medium">Total Lesson</span>
           </div>
-          <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalLessons}</p>
+          <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.totalLessons}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-          <div className="flex items-center gap-2 text-slate-500">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:bg-slate-900 dark:border-slate-800">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
             <Code2 className="h-4 w-4 text-purple-600" />
             <span className="text-xs font-medium">Sukses Submissions</span>
           </div>
-          <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalSubmissions}</p>
+          <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.totalSubmissions}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-          <div className="flex items-center gap-2 text-slate-500">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:bg-slate-900 dark:border-slate-800">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
             <Sparkles className="h-4 w-4 text-amber-500" />
             <span className="text-xs font-medium">Sertifikat Terbit</span>
           </div>
-          <p className="mt-2 text-2xl font-bold text-slate-900">{stats.totalCertificates}</p>
+          <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.totalCertificates}</p>
         </div>
       </div>
 
       {/* Analytics Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Line Chart */}
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col">
-          <h2 className="text-sm font-bold text-slate-900 mb-6">Tren Pendaftar & Eksekusi Kode (7 Hari)</h2>
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col dark:bg-slate-900 dark:border-slate-800">
+          <h2 className="text-sm font-bold text-slate-900 mb-6 dark:text-slate-100">Tren Pendaftar & Eksekusi Kode (7 Hari)</h2>
           <div className="flex-1 min-h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stats.chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -287,8 +287,8 @@ export default function AdminDashboardClient({
 
         {/* Bar Chart & Pie Chart */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col">
-            <h2 className="text-sm font-bold text-slate-900 mb-6">Distribusi Course</h2>
+          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col dark:bg-slate-900 dark:border-slate-800">
+            <h2 className="text-sm font-bold text-slate-900 mb-6 dark:text-slate-100">Distribusi Course</h2>
             <div className="flex-1 min-h-[200px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stats.enrollmentBarData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
@@ -302,8 +302,8 @@ export default function AdminDashboardClient({
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col">
-            <h2 className="text-sm font-bold text-slate-900 mb-2">Rasio Evaluasi Kode</h2>
+          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col dark:bg-slate-900 dark:border-slate-800">
+            <h2 className="text-sm font-bold text-slate-900 mb-2 dark:text-slate-100">Rasio Evaluasi Kode</h2>
             <div className="flex-1 min-h-[200px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -330,15 +330,15 @@ export default function AdminDashboardClient({
       </div>
 
       {/* Settings Panel */}
-      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs dark:bg-slate-900 dark:border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600">
               <Settings className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Pengaturan Global</h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Pengaturan Global</h2>
+              <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">
                 Atur tautan eksternal, komunitas, dan konfigurasi platform.
               </p>
             </div>
@@ -347,8 +347,8 @@ export default function AdminDashboardClient({
         
         <form onSubmit={handleSaveSettings} className="mt-6 space-y-4 max-w-xl">
           <div>
-            <label className="block text-sm font-semibold text-slate-700">Tautan Grup Komunitas (WhatsApp/Discord)</label>
-            <p className="text-[11px] text-slate-500 mt-0.5 mb-2">Tautan ini akan tampil di Dashboard Siswa untuk bergabung ke grup diskusi.</p>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-100">Tautan Grup Komunitas (WhatsApp/Discord)</label>
+            <p className="text-[11px] text-slate-500 mt-0.5 mb-2 dark:text-slate-400">Tautan ini akan tampil di Dashboard Siswa untuk bergabung ke grup diskusi.</p>
             <input
               type="url"
               value={communityLink}
@@ -378,11 +378,11 @@ export default function AdminDashboardClient({
       </div>
 
       {/* Main CMS Management Content */}
-      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs dark:bg-slate-900 dark:border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Manajemen Konten Kurikulum</h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Manajemen Konten Kurikulum</h2>
+            <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">
               Kelola course, chapter, materi lesson, dan test case evaluasi.
             </p>
           </div>
@@ -402,16 +402,16 @@ export default function AdminDashboardClient({
             <div key={course.id} className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">{course.title}</h3>
-                  <span className="text-xs text-slate-500">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">{course.title}</h3>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
                     Slug: <code className="font-mono">{course.slug}</code> • Level: {course.level}
                   </span>
                 </div>
               </div>
 
               {course.chapters.map((chapter) => (
-                <div key={chapter.id} className="rounded-lg border border-slate-200 overflow-hidden">
-                  <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-semibold text-xs text-slate-700 flex items-center justify-between">
+                <div key={chapter.id} className="rounded-lg border border-slate-200 overflow-hidden dark:border-slate-800">
+                  <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-semibold text-xs text-slate-700 flex items-center justify-between dark:text-slate-100 dark:border-slate-800">
                     <span>{chapter.title}</span>
                     <span className="text-slate-400 font-normal">{chapter.lessons.length} Lesson</span>
                   </div>
@@ -423,7 +423,7 @@ export default function AdminDashboardClient({
                         className="px-4 py-3 flex items-center justify-between hover:bg-slate-50/50 transition"
                       >
                         <div className="space-y-0.5">
-                          <p className="font-semibold text-slate-900">{lesson.title}</p>
+                          <p className="font-semibold text-slate-900 dark:text-slate-100">{lesson.title}</p>
                           <p className="text-[11px] text-slate-400 font-mono">
                             /{course.slug}/{lesson.slug}
                           </p>
@@ -473,9 +473,9 @@ export default function AdminDashboardClient({
       {/* Modal Tambah Lesson */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-slate-900">Tambah Lesson Baru</h3>
-            <p className="text-xs text-slate-500 mt-1">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-2xl dark:bg-slate-900 dark:border-slate-800">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Tambah Lesson Baru</h3>
+            <p className="text-xs text-slate-500 mt-1 dark:text-slate-400">
               Tambahkan materi pelajaran dan latihan koding interaktif.
             </p>
 
@@ -487,7 +487,7 @@ export default function AdminDashboardClient({
 
             <form onSubmit={handleCreateLesson} className="mt-5 space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700">Pilih Chapter</label>
+                <label className="block font-semibold text-slate-700 dark:text-slate-100">Pilih Chapter</label>
                 <select
                   value={chapterId}
                   onChange={(e) => setChapterId(e.target.value)}
@@ -505,7 +505,7 @@ export default function AdminDashboardClient({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700">Judul Lesson</label>
+                  <label className="block font-semibold text-slate-700 dark:text-slate-100">Judul Lesson</label>
                   <input
                     type="text"
                     required
@@ -526,7 +526,7 @@ export default function AdminDashboardClient({
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-700">Slug URL</label>
+                  <label className="block font-semibold text-slate-700 dark:text-slate-100">Slug URL</label>
                   <input
                     type="text"
                     required
@@ -539,7 +539,7 @@ export default function AdminDashboardClient({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700">Deskripsi Singkat</label>
+                <label className="block font-semibold text-slate-700 dark:text-slate-100">Deskripsi Singkat</label>
                 <input
                   type="text"
                   required
@@ -551,7 +551,7 @@ export default function AdminDashboardClient({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700">
+                <label className="block font-semibold text-slate-700 dark:text-slate-100">
                   Tujuan Pembelajaran (1 poin per baris)
                 </label>
                 <textarea
@@ -564,7 +564,7 @@ export default function AdminDashboardClient({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700">
+                <label className="block font-semibold text-slate-700 dark:text-slate-100">
                   Konten Materi (Markdown)
                 </label>
                 <textarea
@@ -579,7 +579,7 @@ export default function AdminDashboardClient({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700">Judul Tantangan (Exercise)</label>
+                  <label className="block font-semibold text-slate-700 dark:text-slate-100">Judul Tantangan (Exercise)</label>
                   <input
                     type="text"
                     value={exerciseTitle}
@@ -590,7 +590,7 @@ export default function AdminDashboardClient({
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700">
+                  <label className="block font-semibold text-slate-700 dark:text-slate-100">
                     Expected Output (Keluaran yang Diharapkan)
                   </label>
                   <input
@@ -603,11 +603,11 @@ export default function AdminDashboardClient({
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-4 border-t border-slate-200">
+              <div className="flex justify-end gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="rounded-lg border border-slate-200 px-4 py-2 font-medium text-slate-700 hover:bg-slate-50 transition"
+                  className="rounded-lg border border-slate-200 px-4 py-2 font-medium text-slate-700 hover:bg-slate-50 transition dark:text-slate-100 dark:border-slate-800"
                 >
                   Batal
                 </button>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Terminal, Lock, Mail, ArrowRight, AlertCircle, Check } from 'lucide-react';
 
@@ -9,7 +9,6 @@ import { toast } from 'sonner';
 import AuthAside from '@/components/layout/AuthAside';
 
 function LoginContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
 
@@ -39,9 +38,10 @@ function LoginContent() {
 
       toast.success('Login berhasil! Mengarahkan...', { id: toastId });
       window.location.href = callbackUrl;
-    } catch (err: any) {
-      toast.error(err.message, { id: toastId });
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Terjadi kesalahan. Silakan coba lagi.';
+      toast.error(message, { id: toastId });
+      setError(message);
       setIsLoading(false);
     }
   };

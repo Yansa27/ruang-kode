@@ -43,19 +43,19 @@ export default function WorkspaceNavbar({
   }, []);
 
   return (
-    <header suppressHydrationWarning className="h-13 border-b border-slate-200 bg-white px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
+    <header suppressHydrationWarning className="h-13 border-b border-slate-200 bg-white px-3 sm:px-4 flex items-center justify-between shrink-0 z-30 dark:bg-slate-900 dark:border-slate-800">
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
           title={isSidebarOpen ? 'Sembunyikan Silabus' : 'Tampilkan Silabus'}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-100 transition"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-100 transition dark:border-slate-800"
         >
           <Menu className="h-4 w-4" />
         </button>
 
         <Link
           href={`/learn/${courseSlug}`}
-          className="flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition"
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition dark:text-slate-400"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Kembali ke Silabus</span>
@@ -65,21 +65,21 @@ export default function WorkspaceNavbar({
           <span>/</span>
           <span className="text-slate-600 font-medium truncate max-w-[150px]">{chapterTitle}</span>
           <span>/</span>
-          <span className="text-slate-900 font-semibold truncate max-w-[200px]">{lessonTitle}</span>
+          <span className="text-slate-900 font-semibold truncate max-w-[200px] dark:text-slate-100">{lessonTitle}</span>
         </div>
       </div>
 
       <div className="flex items-center gap-4">
         {/* Course Progress mini-bar */}
         <div className="hidden lg:flex items-center gap-2.5 text-xs">
-          <span className="text-slate-500 font-medium">Progres:</span>
+          <span className="text-slate-500 font-medium dark:text-slate-400">Progres:</span>
           <div className="w-24 h-2 rounded-full bg-slate-100 overflow-hidden">
             <div
               className="h-full bg-blue-600 rounded-full transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <span className="font-semibold text-slate-700">{progressPercent}%</span>
+          <span className="font-semibold text-slate-700 dark:text-slate-100">{progressPercent}%</span>
         </div>
 
         {/* User stats */}

@@ -4,12 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import WorkspaceNavbar from './WorkspaceNavbar';
 import LessonSidebar from './LessonSidebar';
+import LessonStory from './LessonStory';
 import LessonContentPanel from './LessonContentPanel';
 import OutputConsolePanel from './OutputConsolePanel';
 import ExerciseSuccessModal from './ExerciseSuccessModal';
 import ResetConfirmModal from './ResetConfirmModal';
 import { runPythonCode, getPyodideInstance } from '@/lib/pyodide';
 import { soundFx } from '@/lib/sound';
+import { DraftSaver, type SaveStatus } from '@/lib/draft-saver';
 import { BookOpen, Code2, Terminal, CheckCircle2 } from 'lucide-react';
 
 const MonacoEditorWrapper = dynamic(() => import('./MonacoEditorWrapper'), { ssr: false, loading: () => <div className="h-full w-full flex items-center justify-center bg-slate-50 dark:bg-slate-900"><div className="animate-pulse flex flex-col items-center"><Code2 className="h-8 w-8 text-slate-300 mb-2" /><span className="text-xs text-slate-400">Memuat Editor...</span></div></div> });
@@ -86,9 +88,40 @@ export default function LearningWorkspaceClient({
   completedLessonIds: initialCompletedLessonIds,
   userStats: initialUserStats,
 }: LearningWorkspaceClientProps) {
+  const [learningMode, setLearningMode] = useState<'story' | 'practice'>('story');
+
   // Code state
   const defaultStarter = lesson.exercise?.starterCode || lesson.starterCode || '# Tulis kode Python kamu di sini\n';
-  const [code, setCode] = useState<string>(initialCode || defaultStarter);
+  const [code, setCode] = useState<string>(initialCode ?? defaultStarter);
+
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('saved');
+  const draftSaver = useRef<DraftSaver | null>(null);
+  useEffect(() => {
+    let mounted = true;
+    const saver = new DraftSaver(initialCode ?? defaultStarter, async (draft) => {
+      const response = await fetch('/api/progress', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lessonId: lesson.id, code: draft }), keepalive: true,
+      });
+      if (!response.ok) throw new Error('Draft tidak tersimpan');
+    }, (status) => { if (mounted) setSaveStatus(status); });
+    draftSaver.current = saver;
+    const flush = () => { void saver.flush(); };
+    window.addEventListener('pagehide', flush);
+    window.addEventListener('online', flush);
+    return () => {
+      mounted = false;
+      window.removeEventListener('pagehide', flush);
+      window.removeEventListener('online', flush);
+      void saver.flush();
+    };
+  }, [lesson.id, initialCode, defaultStarter]);
+
+  const updateCode = (next: string | ((previous: string) => string)) => {
+    const value = typeof next === 'function' ? next(code) : next;
+    setCode(value);
+    draftSaver.current?.update(value);
+  };
 
   // Runtime and console states
   const [output, setOutput] = useState<string>('');
@@ -171,23 +204,10 @@ export default function LearningWorkspaceClient({
   const [completedLessonIds, setCompletedLessonIds] = useState<string[]>(initialCompletedLessonIds);
   const [userStats, setUserStats] = useState(initialUserStats);
 
-  const totalLessons = chapters.flatMap((c) => c.lessons).length;
-  const progressPercent = totalLessons > 0 ? Math.round((completedLessonIds.length / totalLessons) * 100) : 0;
-
-  // Auto-save draft code debounce
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (code && code !== defaultStarter) {
-        fetch('/api/progress', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lessonId: lesson.id, code }),
-        }).catch(() => {});
-      }
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [code, lesson.id, defaultStarter]);
+  const courseLessons = chapters.flatMap((chapter) => chapter.lessons);
+  const totalLessons = courseLessons.length;
+  const completedCourseCount = courseLessons.filter(item => completedLessonIds.includes(item.id)).length;
+  const progressPercent = totalLessons > 0 ? Math.round((completedCourseCount / totalLessons) * 100) : 0;
 
   // Helper to normalize outputs for fair comparison (ignore trailing spaces and newlines)
   const normalizeOutput = (str: string) => {
@@ -201,6 +221,7 @@ export default function LearningWorkspaceClient({
 
   // Run Code
   const handleRun = async () => {
+    if (isRunning || isSubmitting) return;
     soundFx.playRun();
     setIsRunning(true);
     setError(null);
@@ -228,6 +249,7 @@ export default function LearningWorkspaceClient({
 
   // Submit Exercise
   const handleSubmit = async () => {
+    if (isRunning || isSubmitting) return;
     if (!lesson.exercise) {
       handleRun();
       return;
@@ -292,11 +314,12 @@ export default function LearningWorkspaceClient({
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Jawaban belum tersimpan. Silakan kirim ulang.');
 
       if (data.status === 'PASSED') {
         soundFx.playSuccess();
         setPyodideStatus('Selamat! Seluruh test case berhasil.');
-        setEarnedXp(data.earnedXp || 20);
+        setEarnedXp(data.earnedXp ?? 0);
 
         if (!completedLessonIds.includes(lesson.id)) {
           setCompletedLessonIds((prev) => [...prev, lesson.id]);
@@ -304,6 +327,8 @@ export default function LearningWorkspaceClient({
 
         if (data.userStats) {
           setUserStats(data.userStats);
+        } else if (data.earnedXp > 0) {
+          setUserStats(previous => ({ xp: (previous?.xp ?? 0) + data.earnedXp, streak: previous?.streak ?? 0 }));
         }
 
         setNextLessonSlug(data.nextLessonSlug);
@@ -315,6 +340,7 @@ export default function LearningWorkspaceClient({
     } catch (err: any) {
       setError(err.message || 'Gagal mengevaluasi submission.');
       setPyodideStatus('Evaluasi gagal');
+      setConsoleTab('output');
     } finally {
       setIsSubmitting(false);
     }
@@ -327,7 +353,7 @@ export default function LearningWorkspaceClient({
 
   // Execute reset code
   const handleConfirmReset = () => {
-    setCode(defaultStarter);
+    updateCode(defaultStarter);
     setOutput('');
     setError(null);
     setTestCaseResults(null);
@@ -344,11 +370,11 @@ export default function LearningWorkspaceClient({
   };
 
   const handleCopyExample = (exampleSnippet: string) => {
-    setCode((prev) => `${prev.trim()}\n\n# Contoh yang disalin:\n${exampleSnippet}`);
+    updateCode((prev) => `${prev.trim()}\n\n# Contoh yang disalin:\n${exampleSnippet}`);
   };
 
   return (
-    <div suppressHydrationWarning className="flex h-screen flex-col bg-slate-100 overflow-hidden font-sans">
+    <div suppressHydrationWarning className="learning-workspace flex h-dvh flex-col bg-slate-100 dark:bg-slate-950 overflow-hidden font-sans">
       {/* Workspace Top Navigation Bar */}
       <WorkspaceNavbar
         courseTitle={course.title}
@@ -356,15 +382,19 @@ export default function LearningWorkspaceClient({
         chapterTitle={currentChapter.title}
         lessonTitle={lesson.title}
         progressPercent={progressPercent}
-        completedLessonsCount={completedLessonIds.length}
+        completedLessonsCount={completedCourseCount}
         totalLessons={totalLessons}
         userStats={userStats}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        onToggleSidebar={() => { setLearningMode('practice'); setIsSidebarOpen(!isSidebarOpen); }}
         isSidebarOpen={isSidebarOpen}
       />
 
+      <div className="learning-mode-bar"><div role="group" aria-label="Mode belajar"><button aria-pressed={learningMode === 'story'} onClick={() => setLearningMode('story')}><BookOpen size={16} /> Ikuti cerita</button><button aria-pressed={learningMode === 'practice'} onClick={() => setLearningMode('practice')}><Code2 size={16} /> Ruang praktik</button></div><span>Satu konsep. Satu langkah. Sesuai ritmemu.</span></div>
+      <div className={learningMode === 'story' ? 'flex flex-1 min-h-0' : 'hidden'}>
+        <LessonStory key={lesson.id} courseSlug={course.slug} lesson={lesson} onPractice={() => { setLearningMode('practice'); setMobileTab('code'); }} />
+      </div>
       {/* Mobile Tab Switcher */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 md:hidden shrink-0">
+      <div className={`${learningMode === 'story' ? 'hidden' : 'flex'} border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 md:hidden shrink-0`}>
         <button
           onClick={() => setMobileTab('materi')}
           className={`flex-1 py-2 text-center text-xs font-semibold flex items-center justify-center gap-1.5 ${
@@ -401,7 +431,7 @@ export default function LearningWorkspaceClient({
       </div>
 
       {/* Main Workspace Body */}
-      <div className="relative flex flex-1 overflow-hidden">
+      <div className={`${learningMode === 'story' ? 'hidden' : 'flex'} relative flex-1 overflow-hidden`}>
         {/* Course Syllabus Sidebar */}
         <LessonSidebar
           chapters={chapters}
@@ -460,7 +490,9 @@ export default function LearningWorkspaceClient({
           >
             <MonacoEditorWrapper
               code={code}
-              onChange={(val) => setCode(val || '')}
+              onChange={(val) => updateCode(val ?? '')}
+              saveStatus={saveStatus}
+              onRetrySave={() => { void draftSaver.current?.flush(); }}
               onRun={handleRun}
               onSubmit={handleSubmit}
               onReset={handleOpenResetModal}

@@ -99,6 +99,7 @@ export default async function LessonWorkspacePage({
 
   return (
     <LearningWorkspaceClient
+      key={lesson.id}
       course={{
         id: course.id,
         slug: course.slug,

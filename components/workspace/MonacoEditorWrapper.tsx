@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import type { OnMount } from '@monaco-editor/react';
+import type { SaveStatus } from '@/lib/draft-saver';
 import { Play, RotateCcw, Send, Loader2, CheckCircle2 } from 'lucide-react';
 
 // Lazy load Monaco Editor
@@ -23,6 +25,8 @@ interface MonacoEditorWrapperProps {
   onReset: () => void;
   isRunning: boolean;
   isSubmitting: boolean;
+  saveStatus: SaveStatus;
+  onRetrySave: () => void;
 }
 
 export default function MonacoEditorWrapper({
@@ -33,13 +37,15 @@ export default function MonacoEditorWrapper({
   onReset,
   isRunning,
   isSubmitting,
+  saveStatus,
+  onRetrySave,
 }: MonacoEditorWrapperProps) {
   const [editorTheme, setEditorTheme] = useState<'vs-dark' | 'light'>('vs-dark');
   const [isDark, setIsDark] = useState(true);
   const [cursorLine, setCursorLine] = useState(1);
   const [cursorCol, setCursorCol] = useState(1);
-  const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'idle'>('idle');
-  const [editorRef, setEditorRef] = useState<any>(null);
+  const actions = useRef({ onRun, onSubmit, isRunning, isSubmitting });
+  useEffect(() => { actions.current = { onRun, onSubmit, isRunning, isSubmitting }; }, [onRun, onSubmit, isRunning, isSubmitting]);
 
   // Detect & sync Monaco theme with global dark/light mode
   useEffect(() => {
@@ -54,43 +60,19 @@ export default function MonacoEditorWrapper({
     return () => observer.disconnect();
   }, []);
 
-  // Show save indicator when code changes
-  useEffect(() => {
-    if (!code) return;
-    setSaveStatus('saving');
-    const t = setTimeout(() => setSaveStatus('saved'), 1800);
-    return () => clearTimeout(t);
-  }, [code]);
-
-  // Handle editor mount — register keyboard shortcuts and cursor tracker
-  const handleEditorMount = useCallback(
-    (editor: any, monaco: any) => {
-      setEditorRef(editor);
-
-      // Track cursor position
-      editor.onDidChangeCursorPosition((e: any) => {
-        setCursorLine(e.position.lineNumber);
-        setCursorCol(e.position.column);
-      });
-
-      // Cmd+Enter / Ctrl+Enter → Run Code
-      editor.addCommand(
-        monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
-        () => {
-          onRun();
-        }
-      );
-
-      // Cmd+Shift+Enter / Ctrl+Shift+Enter → Submit
-      editor.addCommand(
-        monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Enter,
-        () => {
-          onSubmit();
-        }
-      );
-    },
-    [onRun, onSubmit]
-  );
+  const handleEditorMount = useCallback<OnMount>((editor, monaco) => {
+    const cursorSubscription = editor.onDidChangeCursorPosition((event) => {
+      setCursorLine(event.position.lineNumber);
+      setCursorCol(event.position.column);
+    });
+    editor.onDidDispose(() => cursorSubscription.dispose());
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+      if (!actions.current.isRunning && !actions.current.isSubmitting) actions.current.onRun();
+    });
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+      if (!actions.current.isRunning && !actions.current.isSubmitting) actions.current.onSubmit();
+    });
+  }, []);
 
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
   const modKey = isMac ? '⌘' : 'Ctrl';
@@ -101,7 +83,7 @@ export default function MonacoEditorWrapper({
   const editorBg = isDark ? 'bg-[#1e1e1e]' : 'bg-white';
 
   return (
-    <div suppressHydrationWarning className={`flex h-full flex-col ${editorBg} border-r ${isDark ? 'border-slate-700/50' : 'border-slate-200'}`}>
+    <div suppressHydrationWarning className={`code-editor flex h-full flex-col ${editorBg} border-r ${isDark ? 'border-slate-700/50' : 'border-slate-200'}`}>
       {/* ── Editor Top Toolbar ── */}
       <div
         className={`flex h-11 items-center justify-between border-b ${toolbarBorder} ${toolbarBg} px-3 shrink-0 select-none`}
@@ -123,7 +105,7 @@ export default function MonacoEditorWrapper({
           <button
             onClick={onReset}
             disabled={isRunning || isSubmitting}
-            title={`Reset kode (${modKey}+R)`}
+            title="Reset kode ke template awal"
             className={`flex items-center gap-1 rounded px-2.5 py-1 text-xs transition disabled:opacity-40 ${
               isDark
                 ? 'text-slate-400 hover:bg-slate-700 hover:text-slate-200'
@@ -219,7 +201,7 @@ export default function MonacoEditorWrapper({
         className={`${statusBg} flex h-6 shrink-0 items-center justify-between px-3 text-[10px] font-medium text-white/90 select-none`}
       >
         {/* Left: cursor position */}
-        <div className="flex items-center gap-3">
+        <div className="editor-status-details flex min-w-0 items-center gap-3 overflow-hidden whitespace-nowrap">
           <span>Ln {cursorLine}, Col {cursorCol}</span>
           <span className="opacity-60">|</span>
           <span>Python 3.12 WebAssembly</span>
@@ -230,13 +212,14 @@ export default function MonacoEditorWrapper({
         </div>
 
         {/* Right: auto-save status */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1.5" role="status" aria-live="polite">
           {saveStatus === 'saving' && (
             <>
               <Loader2 className="h-2.5 w-2.5 animate-spin opacity-70" />
               <span className="opacity-70">Menyimpan...</span>
             </>
           )}
+          {saveStatus === 'error' && <button onClick={onRetrySave} className="text-amber-200 underline">Gagal menyimpan · Coba lagi</button>}
           {saveStatus === 'saved' && (
             <>
               <CheckCircle2 className="h-2.5 w-2.5 text-emerald-300" />
